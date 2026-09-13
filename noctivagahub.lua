@@ -1,276 +1,4586 @@
-local joOO1ll=(getfenv and getfenv(1)) or _ENV or _G
-local jLLOOLijLOi0,l0iLiojiLl=string.byte,string.char
-local function LoLLj0(lll0L1IIoLLl10,jjOj1I0)
-local iiiloLlIILi=""
-local ljLI0O=#jjOj1I0
-for lliooj=1,#lll0L1IIoLLl10 do iiiloLlIILi=iiiloLlIILi..l0iLiojiLl((jLLOOLijLOi0(lll0L1IIoLLl10,lliooj)-jLLOOLijLOi0(jjOj1I0,(lliooj-1)%ljLI0O+1))%256) end
-return iiiloLlIILi
+-- =======================================================
+
+-- NOCTIVAGA HUB V2
+
+-- =======================================================
+
+local ScreenGui = Instance.new("ScreenGui")
+
+local MainFrame = Instance.new("Frame")
+
+local TopBar = Instance.new("Frame")
+
+local Title = Instance.new("TextLabel")
+
+local CloseButton = Instance.new("TextButton")
+
+local Watermark = Instance.new("TextLabel")
+
+local UICorner_Main = Instance.new("UICorner")
+
+local UICorner_Top = Instance.new("UICorner")
+
+local Players = game:GetService("Players")
+
+local Workspace = game:GetService("Workspace")
+
+local StarterGui = game:GetService("StarterGui")
+
+local RunService = game:GetService("RunService")
+
+local UserInputService = game:GetService("UserInputService")
+
+local TweenService = game:GetService("TweenService")
+
+local CoreGui = game:GetService("CoreGui")
+
+local localPlayer = Players.LocalPlayer
+
+-- =======================================================
+-- CARGOS GLOBAIS DO NOCTIVAGA
+-- EDITE SOMENTE AQUI: ESP, TP-PESSOA E NOTIFICADOR USAM ISTO
+-- =======================================================
+
+local OWNER_USER_ID = 1093180180
+
+local ADMIN_GERAL_IDS = {
+    [1093180185] = true,
+}
+
+local function ehOwner(player)
+    return player and player.UserId == OWNER_USER_ID
 end
-local LILOLlO=joOO1ll[LoLLj0("]\002\191\149\154\145","\234\157S07\029")]
-local Lo1O1lo0=joOO1ll[LoLLj0("\022\157\195\147\017\144","\163)Q*")][LoLLj0("y\227S","\006n\241\014\213")]
-local ioi0ol=joOO1ll[LoLLj0("l\169\208^I","\248Hn\242\228")][LoLLj0("\249\228\233\169y\n","\150u{F\024")]
-local Lj0011=joOO1ll[LoLLj0("I\177\028\180","\220P\168L$\210")][LoLLj0("\252\239\220\225\008","\150\131mr")]
-local LoLiiO1=joOO1ll[LoLLj0("\232K\177j\011\214A\181","t\220C\245\158")]
-local j0j1L01ooLI1=joOO1ll[LoLLj0("\189\015Kt\224","X\157\217\005n")]
-local LoiOll0oI0l=LoLiiO1("6161")*1+LILOLlO("#",0,0,0,0)*22+(l0iLiojiLl(82,74)=="RJ" and 5516 or 24)+jLLOOLijLOi0("8")
-local I0LIoO0Oo1i0=joOO1ll[LoLLj0("\134\152\156\170\169","\0187:>Di\253")][LoLLj0("\020|\152\166","\164\0275;\143\225\136")] or function(...) return {n=LILOLlO("#",...),...} end
-local LLlo1O=joOO1ll[LoLLj0("~A\139\020\163","\n\224)\168>t\132")][LoLLj0("G\198>\2530\016","\210X\206\156\205\165")] or joOO1ll[LoLLj0("\156V\181\222\r\023","'\232E}\170\172#")]
-local illIiL11L="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
-local function ijI0jOjjLiLj(IIo0OoljIi10)
-local Li0lOIOI0llLoi={}
-for jILli1L0Iil=1,64 do Li0lOIOI0llLoi[jLLOOLijLOi0(illIiL11L,jILli1L0Iil)]=jILli1L0Iil-1 end
-local jOIloLOi0oiI1,iiL0iOijIo0j,LLjl01IIii0,joijIIi0ll001={},0,0,0
-for jILli1L0Iil=1,#IIo0OoljIi10 do
-local IlOlol=Li0lOIOI0llLoi[jLLOOLijLOi0(IIo0OoljIi10,jILli1L0Iil)]
-if IlOlol then
-iiL0iOijIo0j=iiL0iOijIo0j*64+IlOlol
-LLjl01IIii0=LLjl01IIii0+6
-if LLjl01IIii0>=8 then LLjl01IIii0=LLjl01IIii0-8 joijIIi0ll001=joijIIi0ll001+1 jOIloLOi0oiI1[joijIIi0ll001]=l0iLiojiLl(Lj0011(iiL0iOijIo0j/(2^LLjl01IIii0))%256) iiL0iOijIo0j=iiL0iOijIo0j%(2^LLjl01IIii0) end
+
+local function ehAdministradorGeral(player)
+    return player and ADMIN_GERAL_IDS[player.UserId] == true
 end
+
+ScreenGui.Name = "MenuPremiumNoctivagaV2"
+
+ScreenGui.Parent = game:GetService("CoreGui")
+
+    or localPlayer:WaitForChild("PlayerGui")
+
+ScreenGui.ResetOnSpawn = false
+
+MainFrame.Name = "MainFrame"
+
+MainFrame.Parent = ScreenGui
+
+MainFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+
+MainFrame.Position = UDim2.new(0.2, 0, 0.3, 0)
+
+MainFrame.Size = UDim2.new(0, 220, 0, 275)
+
+MainFrame.BorderSizePixel = 1
+
+MainFrame.BorderColor3 = Color3.fromRGB(0, 255, 200)
+
+MainFrame.Active = true
+
+MainFrame.Draggable = true
+
+UICorner_Main.CornerRadius = UDim.new(0, 12)
+
+UICorner_Main.Parent = MainFrame
+
+TopBar.Name = "TopBar"
+
+TopBar.Parent = MainFrame
+
+TopBar.BackgroundColor3 = Color3.fromRGB(25, 25, 30)
+
+TopBar.Size = UDim2.new(1, 0, 0, 32)
+
+TopBar.BorderSizePixel = 0
+
+UICorner_Top.CornerRadius = UDim.new(0, 12)
+
+UICorner_Top.Parent = TopBar
+
+Title.Name = "Title"
+
+Title.Parent = TopBar
+
+Title.BackgroundTransparency = 1
+
+Title.Position = UDim2.new(0, 12, 0, 0)
+
+Title.Size = UDim2.new(0.7, 0, 1, 0)
+
+Title.Font = Enum.Font.Code
+
+Title.Text = "NOCTIVAGA HUB"
+
+Title.TextColor3 = Color3.fromRGB(0, 255, 200)
+
+Title.TextSize = 13
+
+Title.TextXAlignment = Enum.TextXAlignment.Left
+
+CloseButton.Name = "CloseButton"
+
+CloseButton.Parent = TopBar
+
+CloseButton.BackgroundTransparency = 1
+
+CloseButton.Position = UDim2.new(0.85, 0, 0, 0)
+
+CloseButton.Size = UDim2.new(0, 30, 1, 0)
+
+CloseButton.Font = Enum.Font.GothamBold
+
+CloseButton.Text = "X"
+
+CloseButton.TextColor3 = Color3.fromRGB(255, 75, 75)
+
+CloseButton.TextSize = 14
+
+CloseButton.Activated:Connect(function()
+
+    ScreenGui:Destroy()
+
+end)
+
+Watermark.Name = "Watermark"
+
+Watermark.Parent = MainFrame
+
+Watermark.BackgroundTransparency = 1
+
+Watermark.Position = UDim2.new(0, 0, 0, 240)
+
+Watermark.Size = UDim2.new(1, 0, 0, 25)
+
+Watermark.Font = Enum.Font.Code
+
+Watermark.Text = "By Noctivaga"
+
+Watermark.TextColor3 = Color3.fromRGB(0, 255, 200)
+
+Watermark.TextSize = 11
+
+local Page_Home = Instance.new("Frame", MainFrame)
+
+Page_Home.Size = UDim2.new(1, 0, 1, -35)
+
+Page_Home.Position = UDim2.new(0, 0, 0, 35)
+
+Page_Home.BackgroundTransparency = 1
+
+local Page_Spawns = Instance.new("Frame", MainFrame)
+
+Page_Spawns.Size = UDim2.new(1, 0, 1, -35)
+
+Page_Spawns.Position = UDim2.new(0, 0, 0, 35)
+
+Page_Spawns.BackgroundTransparency = 1
+
+Page_Spawns.Visible = false
+
+local Page_Algema = Instance.new("Frame", MainFrame)
+
+Page_Algema.Size = UDim2.new(1, 0, 1, -35)
+
+Page_Algema.Position = UDim2.new(0, 0, 0, 35)
+
+Page_Algema.BackgroundTransparency = 1
+
+Page_Algema.Visible = false
+
+local Page_ProtecaoPlayers = Instance.new("Frame", MainFrame)
+
+Page_ProtecaoPlayers.Size = UDim2.new(1, 0, 1, -35)
+
+Page_ProtecaoPlayers.Position = UDim2.new(0, 0, 0, 35)
+
+Page_ProtecaoPlayers.BackgroundTransparency = 1
+
+Page_ProtecaoPlayers.Visible = false
+
+-- =======================================================
+
+-- BOTÕES HOME
+
+-- =======================================================
+
+local ButtonAlgema = Instance.new("TextButton", Page_Home)
+
+ButtonAlgema.Size = UDim2.new(0, 190, 0, 35)
+
+ButtonAlgema.Position = UDim2.new(0, 15, 0, 10)
+
+ButtonAlgema.BackgroundColor3 = Color3.fromRGB(20, 30, 45)
+
+ButtonAlgema.Font = Enum.Font.Code
+
+ButtonAlgema.Text = "[ MENU-ALGEMA ]"
+
+ButtonAlgema.TextColor3 = Color3.fromRGB(0, 180, 255)
+
+ButtonAlgema.TextSize = 12
+
+Instance.new("UICorner", ButtonAlgema).CornerRadius = UDim.new(0, 6)
+
+local ButtonFarmeDinheiro = Instance.new("TextButton", Page_Home)
+
+ButtonFarmeDinheiro.Size = UDim2.new(0, 190, 0, 35)
+
+ButtonFarmeDinheiro.Position = UDim2.new(0, 15, 0, 55)
+
+ButtonFarmeDinheiro.BackgroundColor3 = Color3.fromRGB(15, 40, 25)
+
+ButtonFarmeDinheiro.Font = Enum.Font.Code
+
+ButtonFarmeDinheiro.Text = "[ FARME_DINHEIRO: OFF ]"
+
+ButtonFarmeDinheiro.TextColor3 = Color3.fromRGB(46, 204, 113)
+
+ButtonFarmeDinheiro.TextSize = 12
+
+Instance.new("UICorner", ButtonFarmeDinheiro).CornerRadius = UDim.new(0, 6)
+
+local ButtonGoSpawns = Instance.new("TextButton", Page_Home)
+
+ButtonGoSpawns.Size = UDim2.new(0, 190, 0, 35)
+
+ButtonGoSpawns.Position = UDim2.new(0, 15, 0, 100)
+
+ButtonGoSpawns.BackgroundColor3 = Color3.fromRGB(35, 20, 45)
+
+ButtonGoSpawns.Font = Enum.Font.Code
+
+ButtonGoSpawns.Text = "[ SELECIONAR_SPAWN ]"
+
+ButtonGoSpawns.TextColor3 = Color3.fromRGB(180, 80, 255)
+
+ButtonGoSpawns.TextSize = 12
+
+Instance.new("UICorner", ButtonGoSpawns).CornerRadius = UDim.new(0, 6)
+
+local ButtonMorteLocal = Instance.new("TextButton", Page_Home)
+
+ButtonMorteLocal.Size = UDim2.new(0, 190, 0, 35)
+
+ButtonMorteLocal.Position = UDim2.new(0, 15, 0, 145)
+
+ButtonMorteLocal.BackgroundColor3 = Color3.fromRGB(40, 25, 15)
+
+ButtonMorteLocal.Font = Enum.Font.Code
+
+ButtonMorteLocal.Text = "[ MORTE_LOCAL: OFF ]"
+
+ButtonMorteLocal.TextColor3 = Color3.fromRGB(255, 145, 50)
+
+ButtonMorteLocal.TextSize = 12
+
+Instance.new("UICorner", ButtonMorteLocal).CornerRadius = UDim.new(0, 6)
+
+ButtonGoSpawns.Activated:Connect(function()
+
+    Page_Home.Visible = false
+
+    Page_Spawns.Visible = true
+
+end)
+
+-- =======================================================
+
+-- MENU ALGEMA - INTERFACE
+
+-- =======================================================
+
+local function criarBotaoMenuAlgema(
+
+    parent,
+
+    texto,
+
+    posY,
+
+    corFundo,
+
+    corTexto
+
+)
+
+    local botao = Instance.new("TextButton", parent)
+
+    botao.Size = UDim2.new(0, 190, 0, 30)
+
+    botao.Position = UDim2.new(0, 15, 0, posY)
+
+    botao.BackgroundColor3 = corFundo
+
+    botao.Font = Enum.Font.Code
+
+    botao.Text = texto
+
+    botao.TextColor3 = corTexto
+
+    botao.TextSize = 10
+
+    Instance.new("UICorner", botao).CornerRadius =
+
+        UDim.new(0, 5)
+
+    return botao
+
 end
-return ioi0ol(jOIloLOi0oiI1)
+
+local ButtonAntiAlgemaOriginal =
+
+    criarBotaoMenuAlgema(
+
+        Page_Algema,
+
+        "[ ANTI-ALGEMA: OFF ]",
+
+        5,
+
+        Color3.fromRGB(45, 20, 20),
+
+        Color3.fromRGB(255, 100, 100)
+
+    )
+
+local ButtonAntiAlgemaEquipada =
+
+    criarBotaoMenuAlgema(
+
+        Page_Algema,
+
+        "[ ANTI-EQUIPADA: OFF ]",
+
+        42,
+
+        Color3.fromRGB(45, 20, 20),
+
+        Color3.fromRGB(255, 100, 100)
+
+    )
+
+local ButtonAntiAlgemaForte =
+
+    criarBotaoMenuAlgema(
+
+        Page_Algema,
+
+        "[ ANTI-FORTE: OFF ]",
+
+        79,
+
+        Color3.fromRGB(45, 20, 20),
+
+        Color3.fromRGB(255, 100, 100)
+
+    )
+
+local ButtonProtecaoPlayers =
+
+    criarBotaoMenuAlgema(
+
+        Page_Algema,
+
+        "[ PROTECAO_PLAYERS ]",
+
+        116,
+
+        Color3.fromRGB(20, 30, 45),
+
+        Color3.fromRGB(0, 180, 255)
+
+    )
+
+local ButtonVoltarAlgema =
+
+    criarBotaoMenuAlgema(
+
+        Page_Algema,
+
+        "[ < VOLTAR ]",
+
+        165,
+
+        Color3.fromRGB(40, 40, 45),
+
+        Color3.fromRGB(200, 200, 200)
+
+    )
+
+local TituloProtecaoPlayers =
+
+    Instance.new("TextLabel", Page_ProtecaoPlayers)
+
+TituloProtecaoPlayers.Size =
+
+    UDim2.new(0, 190, 0, 20)
+
+TituloProtecaoPlayers.Position =
+
+    UDim2.new(0, 15, 0, 2)
+
+TituloProtecaoPlayers.BackgroundTransparency = 1
+
+TituloProtecaoPlayers.Font = Enum.Font.Code
+
+TituloProtecaoPlayers.Text = "PROTECAO DE PLAYERS"
+
+TituloProtecaoPlayers.TextColor3 =
+
+    Color3.fromRGB(0, 255, 200)
+
+TituloProtecaoPlayers.TextSize = 10
+
+local ListaProtecaoPlayers =
+
+    Instance.new("ScrollingFrame", Page_ProtecaoPlayers)
+
+ListaProtecaoPlayers.Size =
+
+    UDim2.new(0, 190, 0, 125)
+
+ListaProtecaoPlayers.Position =
+
+    UDim2.new(0, 15, 0, 25)
+
+ListaProtecaoPlayers.BackgroundColor3 =
+
+    Color3.fromRGB(12, 12, 17)
+
+ListaProtecaoPlayers.BorderSizePixel = 0
+
+ListaProtecaoPlayers.ScrollBarThickness = 3
+
+ListaProtecaoPlayers.AutomaticCanvasSize =
+
+    Enum.AutomaticSize.Y
+
+ListaProtecaoPlayers.CanvasSize = UDim2.new()
+
+Instance.new(
+
+    "UICorner",
+
+    ListaProtecaoPlayers
+
+).CornerRadius = UDim.new(0, 5)
+
+local LayoutProtecaoPlayers =
+
+    Instance.new(
+
+        "UIListLayout",
+
+        ListaProtecaoPlayers
+
+    )
+
+LayoutProtecaoPlayers.Padding =
+
+    UDim.new(0, 4)
+
+LayoutProtecaoPlayers.HorizontalAlignment =
+
+    Enum.HorizontalAlignment.Center
+
+local PaddingProtecaoPlayers =
+
+    Instance.new(
+
+        "UIPadding",
+
+        ListaProtecaoPlayers
+
+    )
+
+PaddingProtecaoPlayers.PaddingTop =
+
+    UDim.new(0, 5)
+
+PaddingProtecaoPlayers.PaddingBottom =
+
+    UDim.new(0, 5)
+
+local ButtonMasterProtecaoPlayers =
+
+    criarBotaoMenuAlgema(
+
+        Page_ProtecaoPlayers,
+
+        "[ PROTECAO: ON ]",
+
+        158,
+
+        Color3.fromRGB(15, 45, 25),
+
+        Color3.fromRGB(50, 255, 130)
+
+    )
+
+local ButtonVoltarProtecaoPlayers =
+
+    criarBotaoMenuAlgema(
+
+        Page_ProtecaoPlayers,
+
+        "[ < VOLTAR ]",
+
+        195,
+
+        Color3.fromRGB(40, 40, 45),
+
+        Color3.fromRGB(200, 200, 200)
+
+    )
+
+ButtonAlgema.Activated:Connect(function()
+
+    Page_Home.Visible = false
+
+    Page_Spawns.Visible = false
+
+    Page_ProtecaoPlayers.Visible = false
+
+    Page_Algema.Visible = true
+
+end)
+
+ButtonVoltarAlgema.Activated:Connect(function()
+
+    Page_Algema.Visible = false
+
+    Page_ProtecaoPlayers.Visible = false
+
+    Page_Home.Visible = true
+
+end)
+
+-- =======================================================
+
+-- SPAWNS
+
+-- =======================================================
+
+local function criarBotaoSpawn(nome, pos, corTexto, corFundo)
+
+    local btn = Instance.new("TextButton", Page_Spawns)
+
+    btn.Size = UDim2.new(0, 85, 0, 32)
+
+    btn.Position = pos
+
+    btn.BackgroundColor3 = corFundo
+
+    btn.Font = Enum.Font.Code
+
+    btn.Text = "[ " .. nome .. " ]"
+
+    btn.TextColor3 = corTexto
+
+    btn.TextSize = 11
+
+    Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 5)
+
+    return btn
+
 end
-local i1iI0LOO="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"
-local function IOIIjLijLj(lOLojo)
-local j110jO10iL=(854576843)+LoiOll0oI0l
-local L0ol01IlLiIL1=247
-local I1OlloiOoOo0lI={}
-for IjoOLoI=1,#lOLojo do
-j110jO10iL=(j110jO10iL*62209+4176472447)%4294967296
-local LOlioi=jLLOOLijLOi0(lOLojo,IjoOLoI)
-local j0j1ijo=(Lj0011(j110jO10iL/65536)+L0ol01IlLiIL1+(IjoOLoI-1)*184)%256
-I1OlloiOoOo0lI[IjoOLoI]=l0iLiojiLl((LOlioi-j0j1ijo)%256)
-L0ol01IlLiIL1=(L0ol01IlLiIL1*17+LOlioi+1)%251
+
+local Btn_Eb = criarBotaoSpawn(
+
+    "EB",
+
+    UDim2.new(0, 15, 0, 10),
+
+    Color3.fromRGB(241, 196, 15),
+
+    Color3.fromRGB(45, 40, 15)
+
+)
+
+local Btn_Civis = criarBotaoSpawn(
+
+    "CIVIS",
+
+    UDim2.new(0, 120, 0, 10),
+
+    Color3.fromRGB(0, 255, 200),
+
+    Color3.fromRGB(15, 40, 35)
+
+)
+
+local Btn_Prisao = criarBotaoSpawn(
+
+    "PRISÃO",
+
+    UDim2.new(0, 15, 0, 50),
+
+    Color3.fromRGB(255, 100, 100),
+
+    Color3.fromRGB(45, 15, 15)
+
+)
+
+local Btn_Cyber = criarBotaoSpawn(
+
+    "CYBER",
+
+    UDim2.new(0, 120, 0, 50),
+
+    Color3.fromRGB(255, 0, 180),
+
+    Color3.fromRGB(45, 15, 35)
+
+)
+
+local ButtonVoltar = Instance.new("TextButton", Page_Spawns)
+
+ButtonVoltar.Size = UDim2.new(0, 190, 0, 30)
+
+ButtonVoltar.Position = UDim2.new(0, 15, 0, 100)
+
+ButtonVoltar.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
+
+ButtonVoltar.Font = Enum.Font.Code
+
+ButtonVoltar.Text = "[ 🡠 VOLTAR ]"
+
+ButtonVoltar.TextColor3 = Color3.fromRGB(200, 200, 200)
+
+ButtonVoltar.TextSize = 11
+
+Instance.new("UICorner", ButtonVoltar).CornerRadius = UDim.new(0, 5)
+
+ButtonVoltar.Activated:Connect(function()
+
+    Page_Spawns.Visible = false
+
+    Page_Home.Visible = true
+
+end)
+
+-- =======================================================
+
+-- FUNÇÕES GERAIS
+
+-- =======================================================
+
+local function pegarCharacter()
+
+    return localPlayer.Character
+
+        or localPlayer.CharacterAdded:Wait()
+
 end
-return ioi0ol(I1OlloiOoOo0lI)
+
+local function pegarHRP()
+
+    local character = pegarCharacter()
+
+    return character:WaitForChild("HumanoidRootPart")
+
 end
-local L0i1o0j1LIIj=IOIIjLijLj(ijI0jOjjLiLj(i1iI0LOO))
-local LOlioi=1
-local function jjOIloL()
-local IjoOLoI=jLLOOLijLOi0(L0i1o0j1LIIj,LOlioi)
-LOlioi=LOlioi+1
-return IjoOLoI
+
+local function pegarPrompt(obj)
+
+    return obj
+
+        and obj:FindFirstChildWhichIsA(
+
+            "ProximityPrompt",
+
+            true
+
+        )
+
 end
-local function jLoiljjjOoL1o()
-local IjoOLoI,iI1oIjjLl11li=jLLOOLijLOi0(L0i1o0j1LIIj,LOlioi,LOlioi+1)
-LOlioi=LOlioi+2
-return IjoOLoI+iI1oIjjLl11li*256
+
+local function pegarParte(obj, prompt)
+
+    if prompt
+
+        and prompt.Parent
+
+        and prompt.Parent:IsA("BasePart")
+
+    then
+
+        return prompt.Parent
+
+    end
+
+    if obj and obj:IsA("BasePart") then
+
+        return obj
+
+    end
+
+    return obj
+
+        and obj:FindFirstChildWhichIsA(
+
+            "BasePart",
+
+            true
+
+        )
+
 end
-local function iI101ooI11()
-local IjoOLoI,iI1oIjjLl11li,lOLojo,I1OlloiOoOo0lI=jLLOOLijLOi0(L0i1o0j1LIIj,LOlioi,LOlioi+3)
-LOlioi=LOlioi+4
-return IjoOLoI+iI1oIjjLl11li*256+lOLojo*65536+I1OlloiOoOo0lI*16777216
+
+local function pegarCFrame(obj)
+
+    if not obj then
+
+        return nil
+
+    end
+
+    if obj:IsA("BasePart") then
+
+        return obj.CFrame
+
+    end
+
+    if obj:IsA("Model") then
+
+        return obj:GetPivot()
+
+    end
+
+    local parte =
+
+        obj:FindFirstChildWhichIsA(
+
+            "BasePart",
+
+            true
+
+        )
+
+    return parte and parte.CFrame
+
 end
-local function jOOOoLl()
-local IjoOLoI=iI101ooI11()
-local iI1oIjjLl11li=Lo1O1lo0(L0i1o0j1LIIj,LOlioi,LOlioi+IjoOLoI-1)
-LOlioi=LOlioi+IjoOLoI
-return iI1oIjjLl11li
+
+-- =======================================================
+
+-- MENU ALGEMA - BACKEND
+
+-- =======================================================
+
+local antiAlgemaAtivado = false
+
+local regenerando = false
+
+local conexaoAlgema = nil
+
+local conexaoCharacterAlgema = nil
+
+local antiAlgemaEquipadaAtivado = false
+
+local conexaoAntiAlgemaEquipada = nil
+
+local antiAlgemaForteAtivado = false
+
+local conexaoAntiAlgemaForte = nil
+
+local protecaoPlayersAtivada = true
+
+local jogadoresProtegidos = {}
+
+local conexaoProtecaoPlayers = nil
+
+local DISTANCIA_EQUIPADA_ALERTA = 22
+
+local DISTANCIA_EQUIPADA_SAIDA = 30
+
+local PREVISAO_EQUIPADA = 0.18
+
+local DISTANCIA_FORTE_ALERTA = 18
+
+local DISTANCIA_FORTE_SAIDA = 28
+
+local DISTANCIA_PLAYER_ALERTA = 30
+
+local DISTANCIA_PLAYER_SAIDA = 45
+
+local PREVISAO_PLAYER = 0.35
+
+local function atualizarBotaoToggle(
+
+    botao,
+
+    nome,
+
+    ativo
+
+)
+
+    if ativo then
+
+        botao.Text =
+
+            "[ " .. nome .. ": ON ]"
+
+        botao.BackgroundColor3 =
+
+            Color3.fromRGB(
+
+                15,
+
+                45,
+
+                25
+
+            )
+
+        botao.TextColor3 =
+
+            Color3.fromRGB(
+
+                50,
+
+                255,
+
+                130
+
+            )
+
+    else
+
+        botao.Text =
+
+            "[ " .. nome .. ": OFF ]"
+
+        botao.BackgroundColor3 =
+
+            Color3.fromRGB(
+
+                45,
+
+                20,
+
+                20
+
+            )
+
+        botao.TextColor3 =
+
+            Color3.fromRGB(
+
+                255,
+
+                100,
+
+                100
+
+            )
+
+    end
+
 end
-local function ilj11ooLOLlloI()
-local IjoOLoI=jjOIloL()
-local iI1oIjjLl11li=jOOOoLl()
-if IjoOLoI==0 then return LoLiiO1(iI1oIjjLl11li)
-elseif IjoOLoI==1 then return iI1oIjjLl11li
-elseif IjoOLoI==2 then return 1/0
-elseif IjoOLoI==3 then return -1/0
-else return 0/0 end
+
+-- =======================================================
+
+-- ANTI ALGEMA ORIGINAL
+
+-- Mantém a mesma função que já existia no seu script.
+
+-- Agora pode ser ativada e desativada pelo submenu.
+
+-- =======================================================
+
+local function desligarAntiAlgemaOriginal()
+
+    antiAlgemaAtivado = false
+
+    regenerando = false
+
+    if conexaoAlgema then
+
+        conexaoAlgema:Disconnect()
+
+        conexaoAlgema = nil
+
+    end
+
+    if conexaoCharacterAlgema then
+
+        conexaoCharacterAlgema:Disconnect()
+
+        conexaoCharacterAlgema = nil
+
+    end
+
 end
-local function l1j1O101oo0()
-local IoijijjLLiIjl=jjOIloL()
-local IjoOLoI=jjOIloL()
-local iI1oIjjLl11li=jLoiljjjOoL1o()
-local Iii1j1iOljI={}
-for lOLojo=1,iI1oIjjLl11li do local ljoIjil=jLoiljjjOoL1o() Iii1j1iOljI[lOLojo]={ljoIjil,jOOOoLl()} end
-local I1OlloiOoOo0lI=iI101ooI11()
-local jLjo11OiLI={}
-for lOLojo=1,I1OlloiOoOo0lI do
-jLjo11OiLI[lOLojo]={jLoiljjjOoL1o(),jLoiljjjOoL1o(),iI101ooI11(),iI101ooI11()}
+
+local function ligarAntiAlgema(character)
+
+    if not antiAlgemaAtivado then
+
+        return
+
+    end
+
+    if not character then
+
+        return
+
+    end
+
+    if conexaoAlgema then
+
+        conexaoAlgema:Disconnect()
+
+        conexaoAlgema = nil
+
+    end
+
+    local humanoid =
+
+        character:WaitForChild(
+
+            "Humanoid",
+
+            10
+
+        )
+
+    local animator =
+
+        humanoid
+
+        and humanoid:WaitForChild(
+
+            "Animator",
+
+            10
+
+        )
+
+    conexaoAlgema =
+
+        localPlayer:GetAttributeChangedSignal(
+
+            "AlgemadoPor"
+
+        ):Connect(function()
+
+            if not antiAlgemaAtivado then
+
+                return
+
+            end
+
+            if localPlayer:GetAttribute(
+
+                "AlgemadoPor"
+
+            ) == nil then
+
+                return
+
+            end
+
+            if regenerando then
+
+                return
+
+            end
+
+            regenerando = true
+
+            localPlayer:SetAttribute(
+
+                "AlgemadoPor",
+
+                nil
+
+            )
+
+            pcall(function()
+
+                StarterGui:SetCore(
+
+                    "ResetButtonCallback",
+
+                    true
+
+                )
+
+            end)
+
+            if humanoid then
+
+                humanoid:SetStateEnabled(
+
+                    Enum.HumanoidStateType.Seated,
+
+                    true
+
+                )
+
+                if animator then
+
+                    for _, anim in pairs(
+
+                        animator:GetPlayingAnimationTracks()
+
+                    ) do
+
+                        pcall(function()
+
+                            if anim.Animation
+
+                                and anim.Animation.AnimationId
+
+                                    == "rbxassetid://71263663399276"
+
+                            then
+
+                                anim:Stop()
+
+                            end
+
+                        end)
+
+                    end
+
+                end
+
+            end
+
+            task.defer(function()
+
+                for _, obj in pairs(
+
+                    character:GetDescendants()
+
+                ) do
+
+                    if obj:IsA("Weld")
+
+                        or obj:IsA("ManualWeld")
+
+                        or obj:IsA("Constraint")
+
+                        or obj:IsA("BallSocketConstraint")
+
+                    then
+
+                        pcall(function()
+
+                            obj:Destroy()
+
+                        end)
+
+                    end
+
+                end
+
+            end)
+
+            task.defer(function()
+
+                task.wait(0.05)
+
+                if not antiAlgemaAtivado then
+
+                    regenerando = false
+
+                    return
+
+                end
+
+                local charAtual =
+
+                    localPlayer.Character
+
+                if not charAtual then
+
+                    regenerando = false
+
+                    return
+
+                end
+
+                local humanoidAtual =
+
+                    charAtual:FindFirstChildOfClass(
+
+                        "Humanoid"
+
+                    )
+
+                if humanoidAtual
+
+                    and humanoidAtual.Health > 0
+
+                then
+
+                    humanoidAtual.Health = 0
+
+                else
+
+                    regenerando = false
+
+                end
+
+            end)
+
+        end)
+
 end
-local LOlioi=jLoiljjjOoL1o()
-local lIIo0LLilIji0={}
-for lOLojo=1,LOlioi do lIIo0LLilIji0[lOLojo]=l1j1O101oo0() end
-local loIIi1III=jLoiljjjOoL1o()
-local IjLo0l1oli={}
-for lOLojo=1,loIIi1III do IjLo0l1oli[lOLojo]={jjOIloL(),jLoiljjjOoL1o()} end
-return {IoijijjLLiIjl,IjoOLoI,jLjo11OiLI,Iii1j1iOljI,lIIo0LLilIji0,IjLo0l1oli,{}}
+
+local function ativarAntiAlgemaOriginal()
+
+    if antiAlgemaAtivado then
+
+        return
+
+    end
+
+    antiAlgemaAtivado = true
+
+    regenerando = false
+
+    if localPlayer.Character then
+
+        ligarAntiAlgema(
+
+            localPlayer.Character
+
+        )
+
+    end
+
+    if conexaoCharacterAlgema then
+
+        conexaoCharacterAlgema:Disconnect()
+
+    end
+
+    conexaoCharacterAlgema =
+
+        localPlayer.CharacterAdded:Connect(
+
+            function(character)
+
+                if not antiAlgemaAtivado then
+
+                    return
+
+                end
+
+                regenerando = false
+
+                ligarAntiAlgema(character)
+
+            end
+
+        )
+
 end
-local function lO00iO01ooo1oi(ijiLLIj,Lo1L1Lo1OliOO,ljoIjil)
-if Lo1L1Lo1OliOO[ljoIjil]~=nil then return Lo1L1Lo1OliOO[ljoIjil] end
-local IIo0OoljIi10=ijiLLIj[ljoIjil]
-local Li0lOIOI0llLoi=IIo0OoljIi10[1]
-local jILli1L0Iil=IIo0OoljIi10[2]
-local jOIloLOi0oiI1=(40582+Li0lOIOI0llLoi*251+1)%65536
-local iiL0iOijIo0j={}
-for LLjl01IIii0=1,#jILli1L0Iil do
-jOIloLOi0oiI1=(jOIloLOi0oiI1*40503+12345)%65536
-iiL0iOijIo0j[LLjl01IIii0]=l0iLiojiLl((jLLOOLijLOi0(jILli1L0Iil,LLjl01IIii0)-Lj0011(jOIloLOi0oiI1/256)%256-LLjl01IIii0*(40582%256))%256)
+
+ButtonAntiAlgemaOriginal.Activated:Connect(function()
+
+    if antiAlgemaAtivado then
+
+        desligarAntiAlgemaOriginal()
+
+    else
+
+        ativarAntiAlgemaOriginal()
+
+    end
+
+    atualizarBotaoToggle(
+
+        ButtonAntiAlgemaOriginal,
+
+        "ANTI-ALGEMA",
+
+        antiAlgemaAtivado
+
+    )
+
+end)
+
+-- =======================================================
+
+-- ANTI ALGEMA EQUIPADA
+
+-- Só reage a jogador com a Tool "Algemas" equipada.
+
+-- =======================================================
+
+local function desligarAntiAlgemaEquipada()
+
+    antiAlgemaEquipadaAtivado = false
+
+    getgenv().AntiAlgemaPreventivo = false
+
+    if conexaoAntiAlgemaEquipada then
+
+        conexaoAntiAlgemaEquipada:Disconnect()
+
+        conexaoAntiAlgemaEquipada = nil
+
+    end
+
+    getgenv().AntiAlgemaConexao = nil
+
 end
-local joijIIi0ll001=ioi0ol(iiL0iOijIo0j)
-local IlOlol=jLLOOLijLOi0(joijIIi0ll001,1)
-local jlijL0lOlooI=jLLOOLijLOi0(joijIIi0ll001,2)+jLLOOLijLOi0(joijIIi0ll001,3)*256+jLLOOLijLOi0(joijIIi0ll001,4)*65536+jLLOOLijLOi0(joijIIi0ll001,5)*16777216
-local I1iiiol00j0Oi=Lo1O1lo0(joijIIi0ll001,6,5+jlijL0lOlooI)
-local i0IIOiLlLIo
-if IlOlol==0 then i0IIOiLlLIo=LoLiiO1(I1iiiol00j0Oi) elseif IlOlol==1 then i0IIOiLlLIo=I1iiiol00j0Oi elseif IlOlol==2 then i0IIOiLlLIo=1/0 elseif IlOlol==3 then i0IIOiLlLIo=-1/0 else i0IIOiLlLIo=0/0 end
-Lo1L1Lo1OliOO[ljoIjil]=i0IIOiLlLIo
-return i0IIOiLlLIo
+
+local function ativarAntiAlgemaEquipada()
+
+    desligarAntiAlgemaEquipada()
+
+    antiAlgemaEquipadaAtivado = true
+
+    getgenv().AntiAlgemaPreventivo = true
+
+    conexaoAntiAlgemaEquipada =
+
+        RunService.Heartbeat:Connect(function()
+
+            if not antiAlgemaEquipadaAtivado
+
+                or not getgenv().AntiAlgemaPreventivo
+
+            then
+
+                return
+
+            end
+
+            local char = localPlayer.Character
+
+            local hrp =
+
+                char
+
+                and char:FindFirstChild(
+
+                    "HumanoidRootPart"
+
+                )
+
+            if not hrp then
+
+                return
+
+            end
+
+            if localPlayer:GetAttribute(
+
+                "AlgemadoPor"
+
+            ) then
+
+                return
+
+            end
+
+            for _, player in ipairs(
+
+                Players:GetPlayers()
+
+            ) do
+
+                if player ~= localPlayer then
+
+                    local outroChar =
+
+                        player.Character
+
+                    if outroChar then
+
+                        local outroHRP =
+
+                            outroChar:FindFirstChild(
+
+                                "HumanoidRootPart"
+
+                            )
+
+                        local algemas =
+
+                            outroChar:FindFirstChild(
+
+                                "Algemas"
+
+                            )
+
+                        if outroHRP and algemas then
+
+                            local minhaPos =
+
+                                hrp.Position
+
+                            local outraPos =
+
+                                outroHRP.Position
+
+                            local velocidade =
+
+                                outroHRP
+
+                                    .AssemblyLinearVelocity
+
+                            local posPrevista =
+
+                                outraPos
+
+                                + velocidade
+
+                                * PREVISAO_EQUIPADA
+
+                            local delta =
+
+                                minhaPos
+
+                                - posPrevista
+
+                            local distancia =
+
+                                delta.Magnitude
+
+                            if distancia
+
+                                < DISTANCIA_EQUIPADA_ALERTA
+
+                            then
+
+                                local direcao
+
+                                if delta.Magnitude < 0.1 then
+
+                                    direcao =
+
+                                        -outroHRP
+
+                                            .CFrame
+
+                                            .LookVector
+
+                                else
+
+                                    direcao =
+
+                                        delta.Unit
+
+                                end
+
+                                local destino =
+
+                                    posPrevista
+
+                                    + direcao
+
+                                    * DISTANCIA_EQUIPADA_SAIDA
+
+                                hrp.AssemblyLinearVelocity =
+
+                                    Vector3.zero
+
+                                hrp.AssemblyAngularVelocity =
+
+                                    Vector3.zero
+
+                                hrp.CFrame =
+
+                                    CFrame.new(
+
+                                        destino.X,
+
+                                        minhaPos.Y,
+
+                                        destino.Z
+
+                                    )
+
+                                break
+
+                            end
+
+                        end
+
+                    end
+
+                end
+
+            end
+
+        end)
+
+    getgenv().AntiAlgemaConexao =
+
+        conexaoAntiAlgemaEquipada
+
 end
-local i0ljOiO0O={}
-local l1OOLOjO0=jLoiljjjOoL1o()
-for j0j00ljjiji1l=1,l1OOLOjO0 do local IjoOLoI=jLoiljjjOoL1o() local iI1oIjjLl11li=jLoiljjjOoL1o() i0ljOiO0O[IjoOLoI]=iI1oIjjLl11li end
-local jLliI0LliL=l1j1O101oo0()
-local ij01jl1j0I0ILL
-local function j01IiOOl0Lljl(jLliI0LliL,IjLo0l1oli)
-return function(...) return ij01jl1j0I0ILL(jLliI0LliL,IjLo0l1oli,I0LIoO0Oo1i0(...)) end
+
+ButtonAntiAlgemaEquipada.Activated:Connect(function()
+
+    if antiAlgemaEquipadaAtivado then
+
+        desligarAntiAlgemaEquipada()
+
+    else
+
+        ativarAntiAlgemaEquipada()
+
+    end
+
+    atualizarBotaoToggle(
+
+        ButtonAntiAlgemaEquipada,
+
+        "ANTI-EQUIPADA",
+
+        antiAlgemaEquipadaAtivado
+
+    )
+
+end)
+
+-- =======================================================
+
+-- ANTI ALGEMA FORTE
+
+-- Mantém distância de qualquer jogador, mesmo sem algema.
+
+-- =======================================================
+
+local function desligarAntiAlgemaForte()
+
+    antiAlgemaForteAtivado = false
+
+    getgenv().AntiAlgema = false
+
+    if conexaoAntiAlgemaForte then
+
+        conexaoAntiAlgemaForte:Disconnect()
+
+        conexaoAntiAlgemaForte = nil
+
+    end
+
+    getgenv().AntiAlgemaConn = nil
+
 end
-ij01jl1j0I0ILL=function(jLliI0LliL,IjLo0l1oli,lIOL00)
-local jLoI1I0={}
-local iLjj1lLLIoIjj1=0
-local IoijijjLLiIjl=jLliI0LliL[1]
-local lLliiLOjjij=lIOL00.n
-for IjoOLoI=1,IoijijjLLiIjl do jLoI1I0[IjoOLoI-1]=lIOL00[IjoOLoI] end
-local iIiij1Lo,l0olLil={},0
-if jLliI0LliL[2]==1 then l0olLil=lLliiLOjjij-IoijijjLLiIjl; if l0olLil<0 then l0olLil=0 end; for IjoOLoI=1,l0olLil do iIiij1Lo[IjoOLoI]=lIOL00[IoijijjLLiIjl+IjoOLoI] end end
-local jLjo11OiLI,Iii1j1iOljI,lIIo0LLilIji0=jLliI0LliL[3],jLliI0LliL[4],jLliI0LliL[5]
-local il1LjoIo0o=jLliI0LliL[7]
-local IolOj1oi10=1
-local loIIi1III=0
-while true do
-local jloOOOIo0iL1=jLjo11OiLI[IolOj1oi10]
-IolOj1oi10=IolOj1oi10+1
-local i1loOo,IjoOLoI,iI1oIjjLl11li,lOLojo=jloOOOIo0iL1[1],jloOOOIo0iL1[2],jloOOOIo0iL1[3],jloOOOIo0iL1[4]
-local I1OlloiOoOo0lI=i0ljOiO0O[i1loOo]
-if (I1OlloiOoOo0lI*I1OlloiOoOo0lI+I1OlloiOoOo0lI)%2==1 then iLjj1lLLIoIjj1=iLjj1lLLIoIjj1-2 end
-if I1OlloiOoOo0lI==41 then
-jLoI1I0[IjoOLoI+1]=jLoI1I0[iI1oIjjLl11li]; jLoI1I0[IjoOLoI]=jLoI1I0[iI1oIjjLl11li][jLoI1I0[lOLojo]]
-elseif I1OlloiOoOo0lI==1 then
-jLoI1I0[IjoOLoI]=jLoI1I0[iI1oIjjLl11li]*jLoI1I0[lOLojo]
-elseif I1OlloiOoOo0lI==24 then
-jLoI1I0[IjoOLoI]=#jLoI1I0[iI1oIjjLl11li]
-elseif I1OlloiOoOo0lI==20 then
-IolOj1oi10=iI1oIjjLl11li+1
-elseif I1OlloiOoOo0lI==36 then
-jLoI1I0[IjoOLoI]=(jLoI1I0[iI1oIjjLl11li]<jLoI1I0[lOLojo])
-elseif I1OlloiOoOo0lI==15 then
-jLoI1I0[IjoOLoI]=jLoI1I0[iI1oIjjLl11li]%jLoI1I0[lOLojo]
-elseif I1OlloiOoOo0lI==34 then
-jLoI1I0[IjoOLoI]=jLoI1I0[iI1oIjjLl11li][jLoI1I0[lOLojo]]
-elseif I1OlloiOoOo0lI==11 then
-jLoI1I0[IjoOLoI]=(jLoI1I0[iI1oIjjLl11li]<=jLoI1I0[lOLojo])
-elseif I1OlloiOoOo0lI==12 then
-jLoI1I0[IjoOLoI]=(jLoI1I0[iI1oIjjLl11li]>jLoI1I0[lOLojo])
-elseif I1OlloiOoOo0lI==9 then
-joOO1ll[lO00iO01ooo1oi(Iii1j1iOljI,il1LjoIo0o,iI1oIjjLl11li+1)]=jLoI1I0[IjoOLoI]
-elseif I1OlloiOoOo0lI==42 then
-jLoI1I0[IjoOLoI]=-jLoI1I0[iI1oIjjLl11li]
-elseif I1OlloiOoOo0lI==40 then
-jLoI1I0[IjoOLoI]=jLoI1I0[iI1oIjjLl11li]-jLoI1I0[lOLojo]
-elseif I1OlloiOoOo0lI==26 then
-for IIo0OoljIi10=IjoOLoI,IjoOLoI+iI1oIjjLl11li do jLoI1I0[IIo0OoljIi10]=nil end
-elseif I1OlloiOoOo0lI==30 then
-jLoI1I0[IjoOLoI]={}
-elseif I1OlloiOoOo0lI==39 then
-jLoI1I0[IjoOLoI]=jLoI1I0[iI1oIjjLl11li]
-elseif I1OlloiOoOo0lI==22 then
-local Li0lOIOI0llLoi=jLoI1I0[IjoOLoI]
-local jILli1L0Iil
-if iI1oIjjLl11li==0 then jILli1L0Iil=loIIi1III-IjoOLoI-1 else jILli1L0Iil=iI1oIjjLl11li-1 end
-local jOIloLOi0oiI1={}
-for IIo0OoljIi10=1,jILli1L0Iil do jOIloLOi0oiI1[IIo0OoljIi10]=jLoI1I0[IjoOLoI+IIo0OoljIi10] end
-local iiL0iOijIo0j=I0LIoO0Oo1i0(Li0lOIOI0llLoi(LLlo1O(jOIloLOi0oiI1,1,jILli1L0Iil)))
-if lOLojo==0 then
-local LLjl01IIii0=iiL0iOijIo0j.n
-for IIo0OoljIi10=1,LLjl01IIii0 do jLoI1I0[IjoOLoI+IIo0OoljIi10-1]=iiL0iOijIo0j[IIo0OoljIi10] end
-loIIi1III=IjoOLoI+LLjl01IIii0
-else
-for IIo0OoljIi10=1,lOLojo-1 do jLoI1I0[IjoOLoI+IIo0OoljIi10-1]=iiL0iOijIo0j[IIo0OoljIi10] end
+
+local function ativarAntiAlgemaForte()
+
+    desligarAntiAlgemaForte()
+
+    antiAlgemaForteAtivado = true
+
+    getgenv().AntiAlgema = true
+
+    conexaoAntiAlgemaForte =
+
+        RunService.PreSimulation:Connect(function()
+
+            if not antiAlgemaForteAtivado
+
+                or not getgenv().AntiAlgema
+
+            then
+
+                return
+
+            end
+
+            local char = localPlayer.Character
+
+            local hrp =
+
+                char
+
+                and char:FindFirstChild(
+
+                    "HumanoidRootPart"
+
+                )
+
+            if not hrp then
+
+                return
+
+            end
+
+            if localPlayer:GetAttribute(
+
+                "AlgemadoPor"
+
+            ) then
+
+                return
+
+            end
+
+            local minhaPos = hrp.Position
+
+            for _, plr in ipairs(
+
+                Players:GetPlayers()
+
+            ) do
+
+                if plr ~= localPlayer then
+
+                    local outroChar =
+
+                        plr.Character
+
+                    local outroHRP =
+
+                        outroChar
+
+                        and outroChar:FindFirstChild(
+
+                            "HumanoidRootPart"
+
+                        )
+
+                    if outroHRP then
+
+                        local delta =
+
+                            minhaPos
+
+                            - outroHRP.Position
+
+                        local distancia =
+
+                            delta.Magnitude
+
+                        if distancia
+
+                            < DISTANCIA_FORTE_ALERTA
+
+                        then
+
+                            local direcao
+
+                            if distancia < 0.01 then
+
+                                direcao =
+
+                                    -outroHRP
+
+                                        .CFrame
+
+                                        .LookVector
+
+                            else
+
+                                direcao =
+
+                                    delta.Unit
+
+                            end
+
+                            local destino =
+
+                                outroHRP.Position
+
+                                + direcao
+
+                                * DISTANCIA_FORTE_SAIDA
+
+                            hrp.AssemblyLinearVelocity =
+
+                                Vector3.zero
+
+                            hrp.AssemblyAngularVelocity =
+
+                                Vector3.zero
+
+                            hrp.CFrame =
+
+                                CFrame.new(
+
+                                    destino.X,
+
+                                    minhaPos.Y,
+
+                                    destino.Z
+
+                                )
+
+                            break
+
+                        end
+
+                    end
+
+                end
+
+            end
+
+        end)
+
+    getgenv().AntiAlgemaConn =
+
+        conexaoAntiAlgemaForte
+
 end
-elseif I1OlloiOoOo0lI==4 then
-jLoI1I0[IjoOLoI]=(jLoI1I0[iI1oIjjLl11li]~=jLoI1I0[lOLojo])
-elseif I1OlloiOoOo0lI==35 then
-jLoI1I0[IjoOLoI]=not jLoI1I0[iI1oIjjLl11li]
-elseif I1OlloiOoOo0lI==7 then
-jLoI1I0[IjoOLoI]=(iI1oIjjLl11li~=0)
-elseif I1OlloiOoOo0lI==31 then
-jLoI1I0[IjoOLoI]=IjLo0l1oli[iI1oIjjLl11li+1][1]
-elseif I1OlloiOoOo0lI==23 then
-jLoI1I0[IjoOLoI]={jLoI1I0[iI1oIjjLl11li]}
-elseif I1OlloiOoOo0lI==21 then
-jLoI1I0[IjoOLoI]=((jLoI1I0[IjoOLoI] or 0)+iI1oIjjLl11li)%(lOLojo+1)
-elseif I1OlloiOoOo0lI==27 then
-local Li0lOIOI0llLoi=lIIo0LLilIji0[iI1oIjjLl11li+1]
-local jOIloLOi0oiI1={}
-local iiL0iOijIo0j=Li0lOIOI0llLoi[6]
-for IIo0OoljIi10=1,#iiL0iOijIo0j do
-local LLjl01IIii0=iiL0iOijIo0j[IIo0OoljIi10]
-if LLjl01IIii0[1]==1 then jOIloLOi0oiI1[IIo0OoljIi10]=jLoI1I0[LLjl01IIii0[2]] else jOIloLOi0oiI1[IIo0OoljIi10]=IjLo0l1oli[LLjl01IIii0[2]+1] end
+
+ButtonAntiAlgemaForte.Activated:Connect(function()
+
+    if antiAlgemaForteAtivado then
+
+        desligarAntiAlgemaForte()
+
+    else
+
+        ativarAntiAlgemaForte()
+
+    end
+
+    atualizarBotaoToggle(
+
+        ButtonAntiAlgemaForte,
+
+        "ANTI-FORTE",
+
+        antiAlgemaForteAtivado
+
+    )
+
+end)
+
+-- =======================================================
+
+-- PROTEÇÃO SELETIVA DE PLAYERS
+
+-- Cada jogador pode ser ativado/desativado individualmente.
+
+-- =======================================================
+
+local function atualizarBotaoMasterProtecao()
+
+    if protecaoPlayersAtivada then
+
+        ButtonMasterProtecaoPlayers.Text =
+
+            "[ PROTECAO: ON ]"
+
+        ButtonMasterProtecaoPlayers.BackgroundColor3 =
+
+            Color3.fromRGB(15, 45, 25)
+
+        ButtonMasterProtecaoPlayers.TextColor3 =
+
+            Color3.fromRGB(50, 255, 130)
+
+    else
+
+        ButtonMasterProtecaoPlayers.Text =
+
+            "[ PROTECAO: OFF ]"
+
+        ButtonMasterProtecaoPlayers.BackgroundColor3 =
+
+            Color3.fromRGB(45, 20, 20)
+
+        ButtonMasterProtecaoPlayers.TextColor3 =
+
+            Color3.fromRGB(255, 100, 100)
+
+    end
+
 end
-jLoI1I0[IjoOLoI]=j01IiOOl0Lljl(Li0lOIOI0llLoi,jOIloLOi0oiI1)
-elseif I1OlloiOoOo0lI==19 then
-if (not not jLoI1I0[IjoOLoI])==(iI1oIjjLl11li~=0) then IolOj1oi10=lOLojo+1 end
-elseif I1OlloiOoOo0lI==10 then
-jLoI1I0[IjoOLoI]=jLoI1I0[iI1oIjjLl11li][1]
-elseif I1OlloiOoOo0lI==14 then
-jLoI1I0[IjoOLoI]=(jLoI1I0[iI1oIjjLl11li]>=jLoI1I0[lOLojo])
-elseif I1OlloiOoOo0lI==43 then
-jLoI1I0[IjoOLoI]=jLoI1I0[IjoOLoI]+jLoI1I0[IjoOLoI+2]
-local Li0lOIOI0llLoi=jLoI1I0[IjoOLoI+2]
-if (Li0lOIOI0llLoi>0 and jLoI1I0[IjoOLoI]<=jLoI1I0[IjoOLoI+1]) or (Li0lOIOI0llLoi<=0 and jLoI1I0[IjoOLoI]>=jLoI1I0[IjoOLoI+1]) then jLoI1I0[IjoOLoI+3]=jLoI1I0[IjoOLoI]; IolOj1oi10=iI1oIjjLl11li+1 end
-elseif I1OlloiOoOo0lI==3 then
-jLoI1I0[IjoOLoI][jLoI1I0[iI1oIjjLl11li]]=jLoI1I0[lOLojo]
-elseif I1OlloiOoOo0lI==38 then
-jLoI1I0[IjoOLoI]=(jLoI1I0[iI1oIjjLl11li]-jLoI1I0[iI1oIjjLl11li]%jLoI1I0[lOLojo])/jLoI1I0[lOLojo]
-elseif I1OlloiOoOo0lI==37 then
-jLoI1I0[IjoOLoI]=jLoI1I0[iI1oIjjLl11li]..jLoI1I0[lOLojo]
-elseif I1OlloiOoOo0lI==16 then
-jLoI1I0[IjoOLoI]=joOO1ll[lO00iO01ooo1oi(Iii1j1iOljI,il1LjoIo0o,iI1oIjjLl11li+1)]
-elseif I1OlloiOoOo0lI==25 then
-local jILli1L0Iil
-if iI1oIjjLl11li==0 then jILli1L0Iil=loIIi1III-IjoOLoI-1 else jILli1L0Iil=iI1oIjjLl11li end
-local Li0lOIOI0llLoi=jLoI1I0[IjoOLoI]
-for IIo0OoljIi10=1,jILli1L0Iil do Li0lOIOI0llLoi[lOLojo+IIo0OoljIi10]=jLoI1I0[IjoOLoI+IIo0OoljIi10] end
-elseif I1OlloiOoOo0lI==17 then
-IjLo0l1oli[iI1oIjjLl11li+1][1]=jLoI1I0[IjoOLoI]
-elseif I1OlloiOoOo0lI==2 then
-jLoI1I0[IjoOLoI]=jLoI1I0[iI1oIjjLl11li]/jLoI1I0[lOLojo]
-elseif I1OlloiOoOo0lI==8 then
-local jILli1L0Iil
-if iI1oIjjLl11li==0 then jILli1L0Iil=loIIi1III-IjoOLoI else jILli1L0Iil=iI1oIjjLl11li-1 end
-local jOIloLOi0oiI1={}
-for IIo0OoljIi10=1,jILli1L0Iil do jOIloLOi0oiI1[IIo0OoljIi10]=jLoI1I0[IjoOLoI+IIo0OoljIi10-1] end
-return LLlo1O(jOIloLOi0oiI1,1,jILli1L0Iil)
-elseif I1OlloiOoOo0lI==5 then
-jLoI1I0[IjoOLoI]=(jLoI1I0[iI1oIjjLl11li]==jLoI1I0[lOLojo])
-elseif I1OlloiOoOo0lI==6 then
-jLoI1I0[IjoOLoI]=lO00iO01ooo1oi(Iii1j1iOljI,il1LjoIo0o,iI1oIjjLl11li+1)
-elseif I1OlloiOoOo0lI==29 then
-jLoI1I0[IjoOLoI]=jLoI1I0[iI1oIjjLl11li]^jLoI1I0[lOLojo]
-elseif I1OlloiOoOo0lI==18 then
-jLoI1I0[IjoOLoI]=jLoI1I0[iI1oIjjLl11li]+jLoI1I0[lOLojo]
-elseif I1OlloiOoOo0lI==13 then
-jLoI1I0[IjoOLoI]=jLoI1I0[IjoOLoI]-jLoI1I0[IjoOLoI+2]; IolOj1oi10=iI1oIjjLl11li+1
-elseif I1OlloiOoOo0lI==33 then
-jLoI1I0[iI1oIjjLl11li][1]=jLoI1I0[IjoOLoI]
-elseif I1OlloiOoOo0lI==28 then
-local Li0lOIOI0llLoi=jLoI1I0[IjoOLoI]
-local joijIIi0ll001=jLoI1I0[IjoOLoI+1]
-local IlOlol=jLoI1I0[IjoOLoI+2]
-local iiL0iOijIo0j=I0LIoO0Oo1i0(Li0lOIOI0llLoi(joijIIi0ll001,IlOlol))
-local LLjl01IIii0=iiL0iOijIo0j[1]
-if LLjl01IIii0~=nil then
-jLoI1I0[IjoOLoI+2]=LLjl01IIii0
-for IIo0OoljIi10=1,iI1oIjjLl11li do jLoI1I0[IjoOLoI+3+IIo0OoljIi10-1]=iiL0iOijIo0j[IIo0OoljIi10] end
-IolOj1oi10=lOLojo+1
+
+local function criarBotaoPlayerProtegido(player)
+
+    if player == localPlayer then
+
+        return
+
+    end
+
+    local botao =
+
+        Instance.new(
+
+            "TextButton",
+
+            ListaProtecaoPlayers
+
+        )
+
+    botao.Name =
+
+        "Protecao_" .. player.UserId
+
+    botao.Size =
+
+        UDim2.new(1, -10, 0, 27)
+
+    botao.BackgroundColor3 =
+
+        Color3.fromRGB(40, 20, 20)
+
+    botao.Font = Enum.Font.Code
+
+    botao.TextSize = 9
+
+    botao.TextColor3 =
+
+        Color3.fromRGB(255, 100, 100)
+
+    Instance.new(
+
+        "UICorner",
+
+        botao
+
+    ).CornerRadius =
+
+        UDim.new(0, 5)
+
+    local function atualizar()
+
+        if jogadoresProtegidos[player] then
+
+            botao.Text =
+
+                "[ ON ] " .. player.Name
+
+            botao.BackgroundColor3 =
+
+                Color3.fromRGB(15, 45, 25)
+
+            botao.TextColor3 =
+
+                Color3.fromRGB(50, 255, 130)
+
+        else
+
+            botao.Text =
+
+                "[ OFF ] " .. player.Name
+
+            botao.BackgroundColor3 =
+
+                Color3.fromRGB(40, 20, 20)
+
+            botao.TextColor3 =
+
+                Color3.fromRGB(255, 100, 100)
+
+        end
+
+    end
+
+    botao.Activated:Connect(function()
+
+        if jogadoresProtegidos[player] then
+
+            jogadoresProtegidos[player] = nil
+
+        else
+
+            jogadoresProtegidos[player] = true
+
+        end
+
+        atualizar()
+
+    end)
+
+    atualizar()
+
 end
-elseif I1OlloiOoOo0lI==32 then
-if iI1oIjjLl11li==0 then
-for IIo0OoljIi10=1,l0olLil do jLoI1I0[IjoOLoI+IIo0OoljIi10-1]=iIiij1Lo[IIo0OoljIi10] end
-loIIi1III=IjoOLoI+l0olLil
-else
-for IIo0OoljIi10=1,iI1oIjjLl11li-1 do jLoI1I0[IjoOLoI+IIo0OoljIi10-1]=iIiij1Lo[IIo0OoljIi10] end
+
+local function atualizarListaProtecaoPlayers()
+
+    for _, objeto in ipairs(
+
+        ListaProtecaoPlayers:GetChildren()
+
+    ) do
+
+        if objeto:IsA("TextButton") then
+
+            objeto:Destroy()
+
+        end
+
+    end
+
+    for _, player in ipairs(
+
+        Players:GetPlayers()
+
+    ) do
+
+        criarBotaoPlayerProtegido(player)
+
+    end
+
 end
-else j0j1L01ooLI1() end
+
+conexaoProtecaoPlayers =
+
+    RunService.PreSimulation:Connect(function()
+
+        if not protecaoPlayersAtivada then
+
+            return
+
+        end
+
+        if next(jogadoresProtegidos) == nil then
+
+            return
+
+        end
+
+        local character =
+
+            localPlayer.Character
+
+        local hrp =
+
+            character
+
+            and character:FindFirstChild(
+
+                "HumanoidRootPart"
+
+            )
+
+        if not hrp then
+
+            return
+
+        end
+
+        if localPlayer:GetAttribute(
+
+            "AlgemadoPor"
+
+        ) then
+
+            return
+
+        end
+
+        local minhaPos = hrp.Position
+
+        for player in pairs(
+
+            jogadoresProtegidos
+
+        ) do
+
+            if player
+
+                and player.Parent == Players
+
+            then
+
+                local outroChar =
+
+                    player.Character
+
+                local outroHRP =
+
+                    outroChar
+
+                    and outroChar:FindFirstChild(
+
+                        "HumanoidRootPart"
+
+                    )
+
+                if outroHRP then
+
+                    local outraPos =
+
+                        outroHRP.Position
+
+                    local velocidadeRelativa =
+
+                        outroHRP.AssemblyLinearVelocity
+
+                        - hrp.AssemblyLinearVelocity
+
+                    local posPrevista =
+
+                        outraPos
+
+                        + velocidadeRelativa
+
+                        * PREVISAO_PLAYER
+
+                    local delta =
+
+                        minhaPos
+
+                        - posPrevista
+
+                    local distancia =
+
+                        delta.Magnitude
+
+                    if distancia
+
+                        < DISTANCIA_PLAYER_ALERTA
+
+                    then
+
+                        local direcao
+
+                        if distancia < 0.1 then
+
+                            direcao =
+
+                                -outroHRP
+
+                                    .CFrame
+
+                                    .LookVector
+
+                        else
+
+                            direcao =
+
+                                delta.Unit
+
+                        end
+
+                        local destino =
+
+                            posPrevista
+
+                            + direcao
+
+                            * DISTANCIA_PLAYER_SAIDA
+
+                        hrp.AssemblyLinearVelocity =
+
+                            Vector3.zero
+
+                        hrp.AssemblyAngularVelocity =
+
+                            Vector3.zero
+
+                        hrp.CFrame =
+
+                            CFrame.new(
+
+                                destino.X,
+
+                                minhaPos.Y,
+
+                                destino.Z
+
+                            )
+
+                        break
+
+                    end
+
+                end
+
+            end
+
+        end
+
+    end)
+
+getgenv().PlayerProtectionConnection =
+
+    conexaoProtecaoPlayers
+
+ButtonProtecaoPlayers.Activated:Connect(function()
+
+    atualizarListaProtecaoPlayers()
+
+    Page_Algema.Visible = false
+
+    Page_ProtecaoPlayers.Visible = true
+
+end)
+
+ButtonVoltarProtecaoPlayers.Activated:Connect(function()
+
+    Page_ProtecaoPlayers.Visible = false
+
+    Page_Algema.Visible = true
+
+end)
+
+ButtonMasterProtecaoPlayers.Activated:Connect(function()
+
+    protecaoPlayersAtivada =
+
+        not protecaoPlayersAtivada
+
+    atualizarBotaoMasterProtecao()
+
+end)
+
+Players.PlayerAdded:Connect(function()
+
+    if Page_ProtecaoPlayers.Visible then
+
+        task.wait(0.1)
+
+        atualizarListaProtecaoPlayers()
+
+    end
+
+end)
+
+Players.PlayerRemoving:Connect(function(player)
+
+    jogadoresProtegidos[player] = nil
+
+    if Page_ProtecaoPlayers.Visible then
+
+        task.defer(
+
+            atualizarListaProtecaoPlayers
+
+        )
+
+    end
+
+end)
+
+atualizarBotaoToggle(
+
+    ButtonAntiAlgemaOriginal,
+
+    "ANTI-ALGEMA",
+
+    false
+
+)
+
+atualizarBotaoToggle(
+
+    ButtonAntiAlgemaEquipada,
+
+    "ANTI-EQUIPADA",
+
+    false
+
+)
+
+atualizarBotaoToggle(
+
+    ButtonAntiAlgemaForte,
+
+    "ANTI-FORTE",
+
+    false
+
+)
+
+atualizarBotaoMasterProtecao()
+
+-- =======================================================
+
+-- FARME DINHEIRO
+
+-- =======================================================
+
+local farmeDinheiroAtivo = false
+
+local farmeExecucao = 0
+
+local TEMPO_LIXO = 4
+
+local TEMPO_LIXEIRA = 4
+
+local function esperarFarme(segundos, execucao)
+
+    local inicio = os.clock()
+
+    while os.clock() - inicio < segundos do
+
+        if not farmeDinheiroAtivo
+
+            or execucao ~= farmeExecucao
+
+        then
+
+            return false
+
+        end
+
+        task.wait(0.1)
+
+    end
+
+    return true
+
 end
-return iLjj1lLLIoIjj1
+
+local function fazerBau(execucao)
+
+    local caixas =
+
+        Workspace
+
+            :FindFirstChild("Map")
+
+        and Workspace.Map
+
+            :FindFirstChild("Sistemas")
+
+        and Workspace.Map.Sistemas
+
+            :FindFirstChild("Jobs")
+
+        and Workspace.Map.Sistemas.Jobs
+
+            :FindFirstChild("Caixas")
+
+    if not caixas then
+
+        return
+
+    end
+
+    local localEntrega =
+
+        caixas:FindFirstChild(
+
+            "LocalEntrega"
+
+        )
+
+    local promptBau =
+
+        caixas:FindFirstChildWhichIsA(
+
+            "ProximityPrompt",
+
+            true
+
+        )
+
+    if not localEntrega
+
+        or not promptBau
+
+    then
+
+        return
+
+    end
+
+    local parteBau =
+
+        pegarParte(
+
+            promptBau.Parent,
+
+            promptBau
+
+        )
+
+    if not parteBau then
+
+        return
+
+    end
+
+    local hrp = pegarHRP()
+
+    promptBau.HoldDuration = 0
+
+    hrp.CFrame =
+
+        parteBau.CFrame
+
+        * CFrame.new(
+
+            0,
+
+            2,
+
+            -1
+
+        )
+
+    if not esperarFarme(
+
+        0.3,
+
+        execucao
+
+    ) then
+
+        return
+
+    end
+
+    pcall(function()
+
+        fireproximityprompt(
+
+            promptBau
+
+        )
+
+    end)
+
+    if not esperarFarme(
+
+        0.4,
+
+        execucao
+
+    ) then
+
+        return
+
+    end
+
+    local cfEntrega =
+
+        pegarCFrame(
+
+            localEntrega
+
+        )
+
+    if cfEntrega then
+
+        pegarHRP().CFrame =
+
+            cfEntrega
+
+            * CFrame.new(
+
+                0,
+
+                3,
+
+                -2
+
+            )
+
+    end
+
+    esperarFarme(
+
+        0.3,
+
+        execucao
+
+    )
+
 end
-return ij01jl1j0I0ILL(jLliI0LliL,{},I0LIoO0Oo1i0(...))
+
+local function executarRodadaLixos(execucao)
+
+    local job =
+
+        Workspace.Map.Sistemas.Jobs[
+
+            "Recolher Lixo"
+
+        ]
+
+    local listaLixos =
+
+        job.Lixos:GetChildren()
+
+    local listaLixeiras =
+
+        job.Lixeiras:GetChildren()
+
+    local lixeira =
+
+        listaLixeiras[15]
+
+    if not lixeira then
+
+        return
+
+    end
+
+    local promptLixeira =
+
+        pegarPrompt(
+
+            lixeira
+
+        )
+
+    local parteLixeira =
+
+        pegarParte(
+
+            lixeira,
+
+            promptLixeira
+
+        )
+
+    if not promptLixeira
+
+        or not parteLixeira
+
+    then
+
+        return
+
+    end
+
+    promptLixeira.HoldDuration = 0
+
+    local fila = {}
+
+    for i = 35, 3, -1 do
+
+        local lixo =
+
+            listaLixos[i]
+
+        if lixo then
+
+            table.insert(
+
+                fila,
+
+                lixo
+
+            )
+
+        end
+
+    end
+
+    local metade =
+
+        math.floor(
+
+            #fila / 2
+
+        )
+
+    for indice, lixo in ipairs(fila) do
+
+        if not farmeDinheiroAtivo
+
+            or execucao ~= farmeExecucao
+
+        then
+
+            return
+
+        end
+
+        if lixo and lixo.Parent then
+
+            local promptLixo =
+
+                pegarPrompt(
+
+                    lixo
+
+                )
+
+            local parteLixo =
+
+                pegarParte(
+
+                    lixo,
+
+                    promptLixo
+
+                )
+
+            if promptLixo
+
+                and parteLixo
+
+            then
+
+                promptLixo.HoldDuration = 0
+
+                pegarHRP().CFrame =
+
+                    parteLixo.CFrame
+
+                    * CFrame.new(
+
+                        0,
+
+                        2,
+
+                        -1
+
+                    )
+
+                if not esperarFarme(
+
+                    TEMPO_LIXO,
+
+                    execucao
+
+                ) then
+
+                    return
+
+                end
+
+                pcall(function()
+
+                    fireproximityprompt(
+
+                        promptLixo
+
+                    )
+
+                end)
+
+                if not esperarFarme(
+
+                    0.1,
+
+                    execucao
+
+                ) then
+
+                    return
+
+                end
+
+                pegarHRP().CFrame =
+
+                    parteLixeira.CFrame
+
+                    * CFrame.new(
+
+                        0,
+
+                        0,
+
+                        -4
+
+                    )
+
+                if not esperarFarme(
+
+                    TEMPO_LIXEIRA,
+
+                    execucao
+
+                ) then
+
+                    return
+
+                end
+
+                pcall(function()
+
+                    fireproximityprompt(
+
+                        promptLixeira
+
+                    )
+
+                end)
+
+            end
+
+        end
+
+        if indice == metade then
+
+            if not farmeDinheiroAtivo
+
+                or execucao ~= farmeExecucao
+
+            then
+
+                return
+
+            end
+
+            fazerBau(execucao)
+
+        end
+
+    end
+
+end
+
+local function iniciarFarmeDinheiro()
+
+    farmeExecucao += 1
+
+    local minhaExecucao =
+
+        farmeExecucao
+
+    task.spawn(function()
+
+        while farmeDinheiroAtivo
+
+            and minhaExecucao == farmeExecucao
+
+        do
+
+            local sucesso, erro =
+
+                pcall(function()
+
+                    executarRodadaLixos(
+
+                        minhaExecucao
+
+                    )
+
+                end)
+
+            if not sucesso then
+
+                warn(
+
+                    "Erro no FARME_DINHEIRO:",
+
+                    erro
+
+                )
+
+                if not esperarFarme(
+
+                    1,
+
+                    minhaExecucao
+
+                ) then
+
+                    break
+
+                end
+
+            end
+
+            if farmeDinheiroAtivo
+
+                and minhaExecucao == farmeExecucao
+
+            then
+
+                if not esperarFarme(
+
+                    0.2,
+
+                    minhaExecucao
+
+                ) then
+
+                    break
+
+                end
+
+            end
+
+        end
+
+    end)
+
+end
+
+ButtonFarmeDinheiro.Activated:Connect(function()
+
+    farmeDinheiroAtivo =
+
+        not farmeDinheiroAtivo
+
+    if farmeDinheiroAtivo then
+
+        ButtonFarmeDinheiro.Text =
+
+            "[ FARME_DINHEIRO: ONLINE ]"
+
+        ButtonFarmeDinheiro.BackgroundColor3 =
+
+            Color3.fromRGB(
+
+                15,
+
+                55,
+
+                30
+
+            )
+
+        ButtonFarmeDinheiro.TextColor3 =
+
+            Color3.fromRGB(
+
+                50,
+
+                255,
+
+                130
+
+            )
+
+        iniciarFarmeDinheiro()
+
+    else
+
+        farmeExecucao += 1
+
+        ButtonFarmeDinheiro.Text =
+
+            "[ FARME_DINHEIRO: OFF ]"
+
+        ButtonFarmeDinheiro.BackgroundColor3 =
+
+            Color3.fromRGB(
+
+                15,
+
+                40,
+
+                25
+
+            )
+
+        ButtonFarmeDinheiro.TextColor3 =
+
+            Color3.fromRGB(
+
+                46,
+
+                204,
+
+                113
+
+            )
+
+    end
+
+end)
+
+-- =======================================================
+
+-- NASCER ONDE MORREU
+
+-- =======================================================
+
+local respawnNaMorteAtivado = false
+
+local ultimaPosicaoMorte = nil
+
+local ultimaPosicaoViva = nil
+
+local conexaoDied = nil
+
+local conexaoPosicao = nil
+
+local function monitorarPersonagem(character)
+
+    if conexaoDied then
+
+        conexaoDied:Disconnect()
+
+        conexaoDied = nil
+
+    end
+
+    if conexaoPosicao then
+
+        conexaoPosicao:Disconnect()
+
+        conexaoPosicao = nil
+
+    end
+
+    local humanoid =
+
+        character:WaitForChild(
+
+            "Humanoid",
+
+            10
+
+        )
+
+    local hrp =
+
+        character:WaitForChild(
+
+            "HumanoidRootPart",
+
+            10
+
+        )
+
+    if not humanoid
+
+        or not hrp
+
+    then
+
+        return
+
+    end
+
+    ultimaPosicaoViva =
+
+        hrp.CFrame
+
+    conexaoPosicao =
+
+        RunService.Heartbeat:Connect(function()
+
+            if character.Parent
+
+                and hrp.Parent
+
+                and humanoid.Health > 0
+
+            then
+
+                ultimaPosicaoViva =
+
+                    hrp.CFrame
+
+            end
+
+        end)
+
+    conexaoDied =
+
+        humanoid.Died:Connect(function()
+
+            if respawnNaMorteAtivado then
+
+                if hrp
+
+                    and hrp.Parent
+
+                then
+
+                    ultimaPosicaoMorte =
+
+                        hrp.CFrame
+
+                else
+
+                    ultimaPosicaoMorte =
+
+                        ultimaPosicaoViva
+
+                end
+
+            end
+
+        end)
+
+end
+
+ButtonMorteLocal.Activated:Connect(function()
+
+    respawnNaMorteAtivado =
+
+        not respawnNaMorteAtivado
+
+    if respawnNaMorteAtivado then
+
+        ButtonMorteLocal.Text =
+
+            "[ MORTE_LOCAL: ONLINE ]"
+
+        ButtonMorteLocal.BackgroundColor3 =
+
+            Color3.fromRGB(
+
+                15,
+
+                45,
+
+                30
+
+            )
+
+        ButtonMorteLocal.TextColor3 =
+
+            Color3.fromRGB(
+
+                50,
+
+                255,
+
+                130
+
+            )
+
+        ultimaPosicaoMorte = nil
+
+    else
+
+        ButtonMorteLocal.Text =
+
+            "[ MORTE_LOCAL: OFF ]"
+
+        ButtonMorteLocal.BackgroundColor3 =
+
+            Color3.fromRGB(
+
+                40,
+
+                25,
+
+                15
+
+            )
+
+        ButtonMorteLocal.TextColor3 =
+
+            Color3.fromRGB(
+
+                255,
+
+                145,
+
+                50
+
+            )
+
+        ultimaPosicaoMorte = nil
+
+    end
+
+end)
+
+-- =======================================================
+
+-- SISTEMA DE SPAWN
+
+-- =======================================================
+
+local spawnAlvoNome = nil
+
+local function teleportarAposRespawn(character)
+
+    local hrp =
+
+        character:WaitForChild(
+
+            "HumanoidRootPart",
+
+            10
+
+        )
+
+    if not hrp then
+
+        return
+
+    end
+
+    if respawnNaMorteAtivado
+
+        and ultimaPosicaoMorte
+
+    then
+
+        task.wait(0.1)
+
+        hrp.CFrame =
+
+            ultimaPosicaoMorte
+
+            + Vector3.new(
+
+                0,
+
+                3,
+
+                0
+
+            )
+
+        return
+
+    end
+
+    if not spawnAlvoNome then
+
+        return
+
+    end
+
+    local map =
+
+        Workspace:FindFirstChild(
+
+            "Map"
+
+        )
+
+    local spawnsFolder =
+
+        map
+
+        and map:FindFirstChild(
+
+            "Spawns"
+
+        )
+
+    if not spawnsFolder then
+
+        return
+
+    end
+
+    if spawnAlvoNome == "Civis" then
+
+        local listaCivis = {}
+
+        for _, child in pairs(
+
+            spawnsFolder:GetChildren()
+
+        ) do
+
+            if child.Name == "Civis" then
+
+                table.insert(
+
+                    listaCivis,
+
+                    child
+
+                )
+
+            end
+
+        end
+
+        if #listaCivis > 0 then
+
+            task.wait(0.05)
+
+            local spawnEscolhido =
+
+                listaCivis[
+
+                    math.random(
+
+                        1,
+
+                        #listaCivis
+
+                    )
+
+                ]
+
+            hrp.CFrame =
+
+                spawnEscolhido.CFrame
+
+                + Vector3.new(
+
+                    0,
+
+                    3,
+
+                    0
+
+                )
+
+        end
+
+        return
+
+    end
+
+    local blocoSpawn =
+
+        spawnsFolder:FindFirstChild(
+
+            spawnAlvoNome
+
+        )
+
+    if blocoSpawn then
+
+        task.wait(0.05)
+
+        hrp.CFrame =
+
+            blocoSpawn.CFrame
+
+            + Vector3.new(
+
+                0,
+
+                3,
+
+                0
+
+            )
+
+    end
+
+end
+
+if localPlayer.Character then
+
+    task.spawn(function()
+
+        monitorarPersonagem(
+
+            localPlayer.Character
+
+        )
+
+    end)
+
+end
+
+localPlayer.CharacterAdded:Connect(function(character)
+
+    regenerando = false
+
+    task.spawn(function()
+
+        monitorarPersonagem(
+
+            character
+
+        )
+
+    end)
+
+    task.spawn(function()
+
+        teleportarAposRespawn(
+
+            character
+
+        )
+
+    end)
+
+end)
+
+-- =======================================================
+
+-- BOTÕES DOS SPAWNS
+
+-- =======================================================
+
+local function configurarGatilhoSpawn(
+
+    botao,
+
+    nomeOriginalNoDex
+
+)
+
+    botao.Activated:Connect(function()
+
+        spawnAlvoNome =
+
+            nomeOriginalNoDex
+
+        local textoOriginal =
+
+            botao.Text
+
+        botao.Text =
+
+            "[ OK! ]"
+
+        task.wait(0.4)
+
+        botao.Text =
+
+            textoOriginal
+
+        Page_Spawns.Visible = false
+
+        Page_Home.Visible = true
+
+    end)
+
+end
+
+configurarGatilhoSpawn(
+
+    Btn_Eb,
+
+    "Eb"
+
+)
+
+configurarGatilhoSpawn(
+
+    Btn_Civis,
+
+    "Civis"
+
+)
+
+configurarGatilhoSpawn(
+
+    Btn_Prisao,
+
+    "Prisão"
+
+)
+
+configurarGatilhoSpawn(
+
+    Btn_Cyber,
+
+    "Cyber"
+
+)
+
+-- =======================================================
+-- NOVAS IMPLEMENTAÇÕES INTEGRADAS
+-- EXTRAS + ESP + MINI-TP + TP-PESSOA + INF-JUMP
+-- NOTIFICADOR DE CARGOS + MINIMIZAR HUB
+-- =======================================================
+
+-- Limpa versões standalone testadas antes deste HUB.
+local function destruirGuiAntiga(nome)
+    pcall(function()
+        local old = CoreGui:FindFirstChild(nome)
+        if old and old ~= ScreenGui then old:Destroy() end
+    end)
+    pcall(function()
+        if gethui then
+            local old = gethui():FindFirstChild(nome)
+            if old and old ~= ScreenGui then old:Destroy() end
+        end
+    end)
+end
+
+if getgenv().NoctivagaESPConnections then
+    for _, c in pairs(getgenv().NoctivagaESPConnections) do
+        pcall(function() c:Disconnect() end)
+    end
+    getgenv().NoctivagaESPConnections = nil
+end
+if getgenv().NoctivagaESPConnection then
+    pcall(function() getgenv().NoctivagaESPConnection:Disconnect() end)
+    getgenv().NoctivagaESPConnection = nil
+end
+if getgenv().NoctivagaInfiniteJumpConnection then
+    pcall(function() getgenv().NoctivagaInfiniteJumpConnection:Disconnect() end)
+    getgenv().NoctivagaInfiniteJumpConnection = nil
+end
+if getgenv().NoctivagaSpecialJoinConnection then
+    pcall(function() getgenv().NoctivagaSpecialJoinConnection:Disconnect() end)
+    getgenv().NoctivagaSpecialJoinConnection = nil
+end
+if getgenv().NoctivagaTPPessoaConnections then
+    for _, c in pairs(getgenv().NoctivagaTPPessoaConnections) do
+        pcall(function() c:Disconnect() end)
+    end
+    getgenv().NoctivagaTPPessoaConnections = nil
+end
+
+destruirGuiAntiga("NoctivagaESP")
+destruirGuiAntiga("NoctivagaInfiniteJump")
+destruirGuiAntiga("NoctivagaSpecialNotifier")
+destruirGuiAntiga("NoctivagaTPPessoa")
+destruirGuiAntiga("NoctivagaMiniTP")
+
+local NovasConexoes = {}
+local function guardarConexao(c)
+    if c then table.insert(NovasConexoes, c) end
+    return c
+end
+
+-- =======================================================
+-- PÁGINAS NOVAS DO HUB
+-- =======================================================
+
+local Page_Extras = Instance.new("Frame", MainFrame)
+Page_Extras.Size = UDim2.new(1, 0, 1, -35)
+Page_Extras.Position = UDim2.new(0, 0, 0, 35)
+Page_Extras.BackgroundTransparency = 1
+Page_Extras.Visible = false
+
+local Page_ESP = Instance.new("Frame", MainFrame)
+Page_ESP.Size = UDim2.new(1, 0, 1, -35)
+Page_ESP.Position = UDim2.new(0, 0, 0, 35)
+Page_ESP.BackgroundTransparency = 1
+Page_ESP.Visible = false
+
+local Page_ESPAlvos = Instance.new("Frame", MainFrame)
+Page_ESPAlvos.Size = UDim2.new(1, 0, 1, -35)
+Page_ESPAlvos.Position = UDim2.new(0, 0, 0, 35)
+Page_ESPAlvos.BackgroundTransparency = 1
+Page_ESPAlvos.Visible = false
+
+local function esconderPaginasNovas()
+    Page_Extras.Visible = false
+    Page_ESP.Visible = false
+    Page_ESPAlvos.Visible = false
+end
+
+local function criarBotaoExtra(parent, texto, posY, corFundo, corTexto)
+    local b = Instance.new("TextButton", parent)
+    b.Size = UDim2.new(0, 190, 0, 30)
+    b.Position = UDim2.new(0, 15, 0, posY)
+    b.BackgroundColor3 = corFundo
+    b.Font = Enum.Font.Code
+    b.Text = texto
+    b.TextColor3 = corTexto
+    b.TextSize = 10
+    Instance.new("UICorner", b).CornerRadius = UDim.new(0, 5)
+    return b
+end
+
+-- Último espaço livre da HOME: preserva todos os botões que já existiam.
+local ButtonMenuExtras = Instance.new("TextButton", Page_Home)
+ButtonMenuExtras.Size = UDim2.new(0, 190, 0, 35)
+ButtonMenuExtras.Position = UDim2.new(0, 15, 0, 190)
+ButtonMenuExtras.BackgroundColor3 = Color3.fromRGB(15, 35, 40)
+ButtonMenuExtras.Font = Enum.Font.Code
+ButtonMenuExtras.Text = "[ MENU-EXTRAS ]"
+ButtonMenuExtras.TextColor3 = Color3.fromRGB(0, 255, 200)
+ButtonMenuExtras.TextSize = 12
+Instance.new("UICorner", ButtonMenuExtras).CornerRadius = UDim.new(0, 6)
+
+local ButtonExtrasESP = criarBotaoExtra(Page_Extras, "[ ESP ]", 5, Color3.fromRGB(35, 25, 15), Color3.fromRGB(255, 210, 60))
+local ButtonMiniTP = criarBotaoExtra(Page_Extras, "[ MINI-TP: OFF ]", 42, Color3.fromRGB(45, 20, 20), Color3.fromRGB(255, 100, 100))
+local ButtonTPPessoa = criarBotaoExtra(Page_Extras, "[ TP-PESSOA ]", 79, Color3.fromRGB(20, 30, 45), Color3.fromRGB(0, 180, 255))
+local ButtonInfJump = criarBotaoExtra(Page_Extras, "[ INF-JUMP: OFF ]", 116, Color3.fromRGB(45, 20, 20), Color3.fromRGB(255, 100, 100))
+local ButtonVoltarExtras = criarBotaoExtra(Page_Extras, "[ < VOLTAR ]", 165, Color3.fromRGB(40, 40, 45), Color3.fromRGB(200, 200, 200))
+
+ButtonMenuExtras.Activated:Connect(function()
+    Page_Home.Visible = false
+    Page_Spawns.Visible = false
+    Page_Algema.Visible = false
+    Page_ProtecaoPlayers.Visible = false
+    Page_ESP.Visible = false
+    Page_ESPAlvos.Visible = false
+    Page_Extras.Visible = true
+end)
+
+ButtonVoltarExtras.Activated:Connect(function()
+    esconderPaginasNovas()
+    Page_Home.Visible = true
+end)
+
+-- =======================================================
+-- MINIMIZAR HUB
+-- =======================================================
+
+local MinimizeHub = Instance.new("TextButton", TopBar)
+MinimizeHub.Name = "MinimizeHub"
+MinimizeHub.BackgroundTransparency = 1
+MinimizeHub.Position = UDim2.new(0.70, 0, 0, 0)
+MinimizeHub.Size = UDim2.new(0, 30, 1, 0)
+MinimizeHub.Font = Enum.Font.GothamBold
+MinimizeHub.Text = "[-]"
+MinimizeHub.TextColor3 = Color3.fromRGB(0, 255, 200)
+MinimizeHub.TextSize = 14
+
+-- Dá um pouco mais de espaço entre título, minimizar e X.
+Title.Size = UDim2.new(0.62, 0, 1, 0)
+
+local hubMinimizado = false
+local estadoPaginasHub = nil
+local tamanhoNormalHub = MainFrame.Size
+local tamanhoTopNormal = TopBar.Size
+
+local function coletarEstadoPaginas()
+    return {
+        Home = Page_Home.Visible,
+        Spawns = Page_Spawns.Visible,
+        Algema = Page_Algema.Visible,
+        Protecao = Page_ProtecaoPlayers.Visible,
+        Extras = Page_Extras.Visible,
+        ESP = Page_ESP.Visible,
+        ESPAlvos = Page_ESPAlvos.Visible,
+    }
+end
+
+local function aplicarEstadoPaginas(e)
+    Page_Home.Visible = e.Home
+    Page_Spawns.Visible = e.Spawns
+    Page_Algema.Visible = e.Algema
+    Page_ProtecaoPlayers.Visible = e.Protecao
+    Page_Extras.Visible = e.Extras
+    Page_ESP.Visible = e.ESP
+    Page_ESPAlvos.Visible = e.ESPAlvos
+end
+
+local function setHubMinimizado(valor)
+    hubMinimizado = valor
+    if valor then
+        estadoPaginasHub = coletarEstadoPaginas()
+        Page_Home.Visible = false
+        Page_Spawns.Visible = false
+        Page_Algema.Visible = false
+        Page_ProtecaoPlayers.Visible = false
+        Page_Extras.Visible = false
+        Page_ESP.Visible = false
+        Page_ESPAlvos.Visible = false
+        Watermark.Visible = false
+        Title.Visible = false
+        CloseButton.Visible = false
+        MainFrame.Size = UDim2.new(0, 64, 0, 40)
+        TopBar.Size = UDim2.new(1, 0, 1, 0)
+        MinimizeHub.Position = UDim2.new(0, 0, 0, 0)
+        MinimizeHub.Size = UDim2.new(1, 0, 1, 0)
+        MinimizeHub.Text = "[-]"
+    else
+        MainFrame.Size = tamanhoNormalHub
+        TopBar.Size = tamanhoTopNormal
+        MinimizeHub.Position = UDim2.new(0.70, 0, 0, 0)
+        MinimizeHub.Size = UDim2.new(0, 30, 1, 0)
+        MinimizeHub.Text = "[-]"
+        Watermark.Visible = true
+        Title.Visible = true
+        CloseButton.Visible = true
+        if estadoPaginasHub then
+            aplicarEstadoPaginas(estadoPaginasHub)
+        else
+            Page_Home.Visible = true
+        end
+    end
+end
+
+MinimizeHub.Activated:Connect(function()
+    setHubMinimizado(not hubMinimizado)
+end)
+
+-- =======================================================
+-- RESPONSIVIDADE COMPARTILHADA DAS NOVAS FUNÇÕES
+-- =======================================================
+
+local function escalaNovaUI()
+    local cam = Workspace.CurrentCamera
+    if not cam then return 1 end
+    local menor = math.min(cam.ViewportSize.X, cam.ViewportSize.Y)
+    if menor <= 500 then return 0.78 end
+    if menor <= 750 then return 0.90 end
+    return 1
+end
+
+-- =======================================================
+-- MINI-TP INTEGRADO
+-- =======================================================
+
+local miniTPAtivo = false
+local MINI_TP_DISTANCIA = 6
+
+local TPContainer = Instance.new("Frame", ScreenGui)
+TPContainer.Name = "MiniTPFloating"
+TPContainer.AnchorPoint = Vector2.new(0.5, 0.5)
+TPContainer.Position = UDim2.new(0.82, 0, 0.72, 0)
+TPContainer.Size = UDim2.new(0, 100, 0, 52)
+TPContainer.BackgroundTransparency = 1
+TPContainer.Visible = false
+TPContainer.Active = true
+
+local MiniTPScale = Instance.new("UIScale", TPContainer)
+MiniTPScale.Scale = escalaNovaUI()
+
+local BotaoTPFloat = Instance.new("TextButton", TPContainer)
+BotaoTPFloat.Size = UDim2.new(1, 0, 1, 0)
+BotaoTPFloat.BackgroundColor3 = Color3.fromRGB(10, 45, 35)
+BotaoTPFloat.Text = "[ TP >> ]"
+BotaoTPFloat.TextColor3 = Color3.fromRGB(50, 255, 150)
+BotaoTPFloat.Font = Enum.Font.Code
+BotaoTPFloat.TextSize = 14
+BotaoTPFloat.AutoButtonColor = false
+BotaoTPFloat.Active = true
+Instance.new("UICorner", BotaoTPFloat).CornerRadius = UDim.new(0, 10)
+local MiniTPStroke = Instance.new("UIStroke", BotaoTPFloat)
+MiniTPStroke.Color = Color3.fromRGB(50, 255, 150)
+MiniTPStroke.Thickness = 1.5
+
+local function atualizarMiniTPBotao()
+    if miniTPAtivo then
+        ButtonMiniTP.Text = "[ MINI-TP: ON ]"
+        ButtonMiniTP.BackgroundColor3 = Color3.fromRGB(15, 50, 25)
+        ButtonMiniTP.TextColor3 = Color3.fromRGB(50, 255, 130)
+        TPContainer.Visible = true
+    else
+        ButtonMiniTP.Text = "[ MINI-TP: OFF ]"
+        ButtonMiniTP.BackgroundColor3 = Color3.fromRGB(45, 20, 20)
+        ButtonMiniTP.TextColor3 = Color3.fromRGB(255, 100, 100)
+        TPContainer.Visible = false
+    end
+end
+
+local function executarMiniTP()
+    if not miniTPAtivo then return end
+    local char = localPlayer.Character
+    local root = char and char:FindFirstChild("HumanoidRootPart")
+    local hum = char and char:FindFirstChildOfClass("Humanoid")
+    if not char or not root or not hum or hum.Health <= 0 then return end
+    local look = root.CFrame.LookVector
+    local dir = Vector3.new(look.X, 0, look.Z)
+    if dir.Magnitude <= 0.01 then return end
+    dir = dir.Unit
+    local novaPos = root.Position + dir * MINI_TP_DISTANCIA
+    local rot = root.CFrame - root.Position
+    char:PivotTo(CFrame.new(novaPos) * rot)
+end
+
+ButtonMiniTP.Activated:Connect(function()
+    miniTPAtivo = not miniTPAtivo
+    atualizarMiniTPBotao()
+end)
+
+local miniDrag = false
+local miniStart = nil
+local miniPos = nil
+local miniMove = 0
+local miniInput = nil
+local miniDragLimit = 8
+
+BotaoTPFloat.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        miniDrag = true
+        miniStart = input.Position
+        miniPos = TPContainer.Position
+        miniMove = 0
+        miniInput = input
+    end
+end)
+
+BotaoTPFloat.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+        miniInput = input
+    end
+end)
+
+guardarConexao(UserInputService.InputChanged:Connect(function(input)
+    if not miniDrag or input ~= miniInput or not miniStart or not miniPos then return end
+    local delta = input.Position - miniStart
+    miniMove = delta.Magnitude
+    if miniMove >= miniDragLimit then
+        TPContainer.Position = UDim2.new(
+            miniPos.X.Scale, miniPos.X.Offset + delta.X,
+            miniPos.Y.Scale, miniPos.Y.Offset + delta.Y
+        )
+    end
+end))
+
+guardarConexao(UserInputService.InputEnded:Connect(function(input)
+    if not miniDrag then return end
+    if input.UserInputType ~= Enum.UserInputType.MouseButton1 and input.UserInputType ~= Enum.UserInputType.Touch then return end
+    miniDrag = false
+    if miniMove < miniDragLimit then executarMiniTP() end
+end))
+
+atualizarMiniTPBotao()
+
+-- =======================================================
+-- INFINITE JUMP INTEGRADO
+-- =======================================================
+
+local infiniteJumpAtivo = false
+
+local function atualizarInfiniteJumpBotao()
+    if infiniteJumpAtivo then
+        ButtonInfJump.Text = "[ INF-JUMP: ON ]"
+        ButtonInfJump.BackgroundColor3 = Color3.fromRGB(15, 50, 25)
+        ButtonInfJump.TextColor3 = Color3.fromRGB(50, 255, 130)
+    else
+        ButtonInfJump.Text = "[ INF-JUMP: OFF ]"
+        ButtonInfJump.BackgroundColor3 = Color3.fromRGB(45, 20, 20)
+        ButtonInfJump.TextColor3 = Color3.fromRGB(255, 100, 100)
+    end
+end
+
+ButtonInfJump.Activated:Connect(function()
+    infiniteJumpAtivo = not infiniteJumpAtivo
+    atualizarInfiniteJumpBotao()
+end)
+
+guardarConexao(UserInputService.JumpRequest:Connect(function()
+    if not infiniteJumpAtivo then return end
+    local char = localPlayer.Character
+    local hum = char and char:FindFirstChildOfClass("Humanoid")
+    if hum and hum.Health > 0 then
+        hum:ChangeState(Enum.HumanoidStateType.Jumping)
+    end
+end))
+
+atualizarInfiniteJumpBotao()
+
+-- =======================================================
+-- TP-PESSOA INTEGRADO
+-- =======================================================
+
+local TP_PESSOA_DISTANCIA = 4
+local TPPessoaFrame = Instance.new("Frame", ScreenGui)
+TPPessoaFrame.Name = "TPPessoaFrame"
+TPPessoaFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+TPPessoaFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
+TPPessoaFrame.Size = UDim2.new(0, 270, 0, 370)
+TPPessoaFrame.BackgroundColor3 = Color3.fromRGB(13, 13, 18)
+TPPessoaFrame.BorderSizePixel = 0
+TPPessoaFrame.Visible = false
+TPPessoaFrame.Active = true
+TPPessoaFrame.Draggable = true
+Instance.new("UICorner", TPPessoaFrame).CornerRadius = UDim.new(0, 10)
+local TPPessoaStroke = Instance.new("UIStroke", TPPessoaFrame)
+TPPessoaStroke.Color = Color3.fromRGB(0, 255, 200)
+TPPessoaStroke.Thickness = 1.5
+local TPPessoaScale = Instance.new("UIScale", TPPessoaFrame)
+TPPessoaScale.Scale = escalaNovaUI()
+
+local TPPessoaTop = Instance.new("Frame", TPPessoaFrame)
+TPPessoaTop.Size = UDim2.new(1, 0, 0, 34)
+TPPessoaTop.BackgroundColor3 = Color3.fromRGB(20, 20, 27)
+TPPessoaTop.BorderSizePixel = 0
+TPPessoaTop.Active = true
+Instance.new("UICorner", TPPessoaTop).CornerRadius = UDim.new(0, 10)
+
+local TPPessoaTitulo = Instance.new("TextLabel", TPPessoaTop)
+TPPessoaTitulo.Position = UDim2.new(0, 10, 0, 0)
+TPPessoaTitulo.Size = UDim2.new(1, -82, 1, 0)
+TPPessoaTitulo.BackgroundTransparency = 1
+TPPessoaTitulo.Text = "TP-PESSOA"
+TPPessoaTitulo.Font = Enum.Font.Code
+TPPessoaTitulo.TextSize = 13
+TPPessoaTitulo.TextColor3 = Color3.fromRGB(0, 255, 200)
+TPPessoaTitulo.TextXAlignment = Enum.TextXAlignment.Left
+
+local TPPessoaMin = Instance.new("TextButton", TPPessoaTop)
+TPPessoaMin.Position = UDim2.new(1, -72, 0, 0)
+TPPessoaMin.Size = UDim2.new(0, 34, 1, 0)
+TPPessoaMin.BackgroundTransparency = 1
+TPPessoaMin.Text = "[-]"
+TPPessoaMin.TextColor3 = Color3.fromRGB(0, 255, 200)
+TPPessoaMin.Font = Enum.Font.GothamBold
+TPPessoaMin.TextSize = 14
+
+local TPPessoaClose = Instance.new("TextButton", TPPessoaTop)
+TPPessoaClose.Position = UDim2.new(1, -38, 0, 0)
+TPPessoaClose.Size = UDim2.new(0, 38, 1, 0)
+TPPessoaClose.BackgroundTransparency = 1
+TPPessoaClose.Text = "X"
+TPPessoaClose.TextColor3 = Color3.fromRGB(255, 80, 80)
+TPPessoaClose.Font = Enum.Font.GothamBold
+TPPessoaClose.TextSize = 14
+
+local TPPesquisa = Instance.new("TextBox", TPPessoaFrame)
+TPPesquisa.Position = UDim2.new(0, 8, 0, 42)
+TPPesquisa.Size = UDim2.new(1, -16, 0, 36)
+TPPesquisa.BackgroundColor3 = Color3.fromRGB(23, 23, 30)
+TPPesquisa.BorderSizePixel = 0
+TPPesquisa.Text = ""
+TPPesquisa.PlaceholderText = "Pesquisar jogador..."
+TPPesquisa.PlaceholderColor3 = Color3.fromRGB(130, 130, 140)
+TPPesquisa.TextColor3 = Color3.fromRGB(235, 235, 240)
+TPPesquisa.ClearTextOnFocus = false
+TPPesquisa.Font = Enum.Font.Code
+TPPesquisa.TextSize = 11
+Instance.new("UICorner", TPPesquisa).CornerRadius = UDim.new(0, 6)
+local TPPesquisaStroke = Instance.new("UIStroke", TPPesquisa)
+TPPesquisaStroke.Color = Color3.fromRGB(50, 80, 80)
+TPPesquisaStroke.Thickness = 1
+
+local TPDica = Instance.new("TextLabel", TPPessoaFrame)
+TPDica.Position = UDim2.new(0, 10, 0, 80)
+TPDica.Size = UDim2.new(1, -20, 0, 18)
+TPDica.BackgroundTransparency = 1
+TPDica.Text = "Digite 3 letras para localizar rapidamente"
+TPDica.TextColor3 = Color3.fromRGB(120, 120, 135)
+TPDica.Font = Enum.Font.Code
+TPDica.TextSize = 9
+TPDica.TextXAlignment = Enum.TextXAlignment.Left
+
+local TPLista = Instance.new("ScrollingFrame", TPPessoaFrame)
+TPLista.Position = UDim2.new(0, 8, 0, 102)
+TPLista.Size = UDim2.new(1, -16, 1, -110)
+TPLista.BackgroundColor3 = Color3.fromRGB(9, 9, 13)
+TPLista.BorderSizePixel = 0
+TPLista.ScrollBarThickness = 3
+TPLista.AutomaticCanvasSize = Enum.AutomaticSize.Y
+TPLista.CanvasSize = UDim2.new()
+Instance.new("UICorner", TPLista).CornerRadius = UDim.new(0, 6)
+local TPLayout = Instance.new("UIListLayout", TPLista)
+TPLayout.Padding = UDim.new(0, 5)
+TPLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+TPLayout.SortOrder = Enum.SortOrder.LayoutOrder
+local TPPadding = Instance.new("UIPadding", TPLista)
+TPPadding.PaddingTop = UDim.new(0, 5)
+TPPadding.PaddingBottom = UDim.new(0, 5)
+
+local tpPessoaMinimizado = false
+local tpPessoaTamanhoNormal = TPPessoaFrame.Size
+
+local function setTPPessoaMinimizado(valor)
+    tpPessoaMinimizado = valor
+    if valor then
+        TPPessoaFrame.Size = UDim2.new(0, 76, 0, 40)
+        TPPessoaTitulo.Visible = false
+        TPPessoaClose.Visible = false
+        TPPesquisa.Visible = false
+        TPDica.Visible = false
+        TPLista.Visible = false
+        TPPessoaMin.Position = UDim2.new(0, 0, 0, 0)
+        TPPessoaMin.Size = UDim2.new(1, 0, 1, 0)
+        TPPessoaMin.Text = "[-]"
+    else
+        TPPessoaFrame.Size = tpPessoaTamanhoNormal
+        TPPessoaTitulo.Visible = true
+        TPPessoaClose.Visible = true
+        TPPesquisa.Visible = true
+        TPDica.Visible = true
+        TPLista.Visible = true
+        TPPessoaMin.Position = UDim2.new(1, -72, 0, 0)
+        TPPessoaMin.Size = UDim2.new(0, 34, 1, 0)
+        TPPessoaMin.Text = "[-]"
+    end
+end
+
+TPPessoaMin.Activated:Connect(function()
+    setTPPessoaMinimizado(not tpPessoaMinimizado)
+end)
+
+TPPessoaClose.Activated:Connect(function()
+    TPPessoaFrame.Visible = false
+    TPPesquisa:ReleaseFocus()
+end)
+
+local function textoPesquisaLimpo(texto)
+    texto = string.lower(tostring(texto or ""))
+    texto = string.gsub(texto, "^%s+", "")
+    texto = string.gsub(texto, "%s+$", "")
+    return texto
+end
+
+local function tpPassaPesquisa(player, pesquisa)
+    if pesquisa == "" then return true end
+    local nome = string.lower(player.Name)
+    local display = string.lower(player.DisplayName)
+    return string.find(nome, pesquisa, 1, true) ~= nil
+        or string.find(display, pesquisa, 1, true) ~= nil
+end
+
+local function prioridadeCargo(player)
+    if ehOwner(player) then return 1 end
+    if ehAdministradorGeral(player) then return 2 end
+    return 3
+end
+
+local function teleportarParaPessoa(alvo)
+    if not alvo or alvo == localPlayer then return end
+    local meuChar = localPlayer.Character
+    local charAlvo = alvo.Character
+    local hum = meuChar and meuChar:FindFirstChildOfClass("Humanoid")
+    local rootAlvo = charAlvo and charAlvo:FindFirstChild("HumanoidRootPart")
+    if not meuChar or not hum or hum.Health <= 0 or not rootAlvo then return end
+    meuChar:PivotTo(rootAlvo.CFrame * CFrame.new(0, 0, TP_PESSOA_DISTANCIA))
+end
+
+local function limparTPLista()
+    for _, obj in ipairs(TPLista:GetChildren()) do
+        if obj:IsA("TextButton") or obj.Name == "TPResultadoVazio" then obj:Destroy() end
+    end
+end
+
+local function atualizarTPLista()
+    limparTPLista()
+    local pesquisa = textoPesquisaLimpo(TPPesquisa.Text)
+    local lista = {}
+    for _, p in ipairs(Players:GetPlayers()) do
+        if p ~= localPlayer and tpPassaPesquisa(p, pesquisa) then
+            table.insert(lista, p)
+        end
+    end
+    table.sort(lista, function(a, b)
+        local pa, pb = prioridadeCargo(a), prioridadeCargo(b)
+        if pa ~= pb then return pa < pb end
+        return string.lower(a.Name) < string.lower(b.Name)
+    end)
+
+    if #lista == 0 then
+        local vazio = Instance.new("TextLabel", TPLista)
+        vazio.Name = "TPResultadoVazio"
+        vazio.Size = UDim2.new(1, -10, 0, 40)
+        vazio.BackgroundTransparency = 1
+        vazio.Text = "Nenhum jogador encontrado"
+        vazio.TextColor3 = Color3.fromRGB(130, 130, 140)
+        vazio.Font = Enum.Font.Code
+        vazio.TextSize = 10
+        return
+    end
+
+    for _, p in ipairs(lista) do
+        local b = Instance.new("TextButton", TPLista)
+        b.Size = UDim2.new(1, -10, 0, 36)
+        b.BorderSizePixel = 0
+        b.Font = Enum.Font.Code
+        b.TextSize = 10
+        b.TextColor3 = Color3.fromRGB(255, 255, 255)
+        b.AutoButtonColor = true
+        b.RichText = false
+        Instance.new("UICorner", b).CornerRadius = UDim.new(0, 6)
+
+        if ehOwner(p) then
+            b.Text = "🔨 [ DONO ] " .. p.Name
+            if p.DisplayName ~= p.Name then b.Text = b.Text .. " • " .. p.DisplayName end
+            b.BackgroundColor3 = Color3.fromRGB(24, 20, 22)
+            local s = Instance.new("UIStroke", b)
+            s.Color = Color3.fromRGB(255, 77, 90)
+            s.Thickness = 1.4
+            s.Transparency = 0.15
+        elseif ehAdministradorGeral(p) then
+            b.Text = "★ [ ADM ] " .. p.Name
+            if p.DisplayName ~= p.Name then b.Text = b.Text .. " • " .. p.DisplayName end
+            b.BackgroundColor3 = Color3.fromRGB(28, 15, 50)
+            local s = Instance.new("UIStroke", b)
+            s.Color = Color3.fromRGB(145, 95, 255)
+            s.Thickness = 1.4
+            s.Transparency = 0.12
+        else
+            b.Text = p.Name
+            if p.DisplayName ~= p.Name then b.Text = b.Text .. " • " .. p.DisplayName end
+            b.BackgroundColor3 = Color3.fromRGB(27, 27, 34)
+            b.TextColor3 = Color3.fromRGB(225, 225, 230)
+        end
+
+        b.Activated:Connect(function()
+            teleportarParaPessoa(p)
+        end)
+    end
+end
+
+ButtonTPPessoa.Activated:Connect(function()
+    setTPPessoaMinimizado(false)
+    TPPesquisa.Text = ""
+    atualizarTPLista()
+    TPPessoaFrame.Visible = true
+end)
+
+guardarConexao(TPPesquisa:GetPropertyChangedSignal("Text"):Connect(atualizarTPLista))
+
+guardarConexao(Players.PlayerAdded:Connect(function()
+    if TPPessoaFrame.Visible then task.defer(atualizarTPLista) end
+end))
+
+guardarConexao(Players.PlayerRemoving:Connect(function()
+    if TPPessoaFrame.Visible then task.defer(atualizarTPLista) end
+end))
+
+-- =======================================================
+-- ESP INTEGRADO AO MENU
+-- =======================================================
+
+local ESP_CONFIG = {
+    Ativado = true,
+    AbrirInfo = false,
+    MostrarMeuESP = true,
+    DistanciaMaxima = 1000,
+    OffsetY = 3.2,
+    Largura = 280,
+    Altura = 40,
+    FundoAltura = 25,
+    Texto = 14,
+    DistanciaPerigo = 40,
+    VelocidadePerigo = 0.28,
+    VelocidadeRastreio = 0.22,
+    CorEB = Color3.fromRGB(255, 210, 60),
+    CorCivil = Color3.fromRGB(0, 255, 200),
+    CorCyber = Color3.fromRGB(255, 0, 200),
+    CorPrisao = Color3.fromRGB(255, 130, 50),
+    CorOutro = Color3.fromRGB(235, 235, 235),
+    Fundo = Color3.fromRGB(10, 10, 15),
+    CorOwner = Color3.fromRGB(255, 0, 0),
+    TextoOwner = Color3.fromRGB(255, 65, 65),
+    FundoOwner = Color3.fromRGB(55, 0, 0),
+    CorAdmin = Color3.fromRGB(145, 95, 255),
+    TextoAdmin = Color3.fromRGB(210, 190, 255),
+    FundoAdmin = Color3.fromRGB(28, 15, 50),
+    CorTrack1 = Color3.fromRGB(50, 255, 120),
+    CorTrack2 = Color3.fromRGB(0, 170, 80),
+}
+
+local ButtonESPAtivo = criarBotaoExtra(Page_ESP, "[ ESP: ON ]", 5, Color3.fromRGB(15, 45, 25), Color3.fromRGB(50, 255, 130))
+local ButtonESPInfo = criarBotaoExtra(Page_ESP, "[ INFO: OFF ]", 42, Color3.fromRGB(45, 20, 20), Color3.fromRGB(255, 100, 100))
+local ButtonESPAlvos = criarBotaoExtra(Page_ESP, "[ ALVOS ]", 79, Color3.fromRGB(15, 40, 25), Color3.fromRGB(50, 255, 120))
+local ButtonVoltarESP = criarBotaoExtra(Page_ESP, "[ < VOLTAR ]", 165, Color3.fromRGB(40, 40, 45), Color3.fromRGB(200, 200, 200))
+
+local TituloESPAlvos = Instance.new("TextLabel", Page_ESPAlvos)
+TituloESPAlvos.Size = UDim2.new(0, 190, 0, 20)
+TituloESPAlvos.Position = UDim2.new(0, 15, 0, 2)
+TituloESPAlvos.BackgroundTransparency = 1
+TituloESPAlvos.Font = Enum.Font.Code
+TituloESPAlvos.Text = "RASTREAR PLAYER"
+TituloESPAlvos.TextColor3 = ESP_CONFIG.CorTrack1
+TituloESPAlvos.TextSize = 10
+
+local ListaESPAlvos = Instance.new("ScrollingFrame", Page_ESPAlvos)
+ListaESPAlvos.Size = UDim2.new(0, 190, 0, 155)
+ListaESPAlvos.Position = UDim2.new(0, 15, 0, 25)
+ListaESPAlvos.BackgroundColor3 = Color3.fromRGB(12, 12, 17)
+ListaESPAlvos.BorderSizePixel = 0
+ListaESPAlvos.ScrollBarThickness = 3
+ListaESPAlvos.AutomaticCanvasSize = Enum.AutomaticSize.Y
+ListaESPAlvos.CanvasSize = UDim2.new()
+Instance.new("UICorner", ListaESPAlvos).CornerRadius = UDim.new(0, 5)
+local LayoutESPAlvos = Instance.new("UIListLayout", ListaESPAlvos)
+LayoutESPAlvos.Padding = UDim.new(0, 4)
+LayoutESPAlvos.HorizontalAlignment = Enum.HorizontalAlignment.Center
+local PaddingESPAlvos = Instance.new("UIPadding", ListaESPAlvos)
+PaddingESPAlvos.PaddingTop = UDim.new(0, 4)
+PaddingESPAlvos.PaddingBottom = UDim.new(0, 4)
+local ButtonVoltarESPAlvos = criarBotaoExtra(Page_ESPAlvos, "[ < VOLTAR ]", 188, Color3.fromRGB(40, 40, 45), Color3.fromRGB(200, 200, 200))
+
+local ESP_Rastreados = {}
+local ESPs = {}
+
+local function espEscala()
+    return escalaNovaUI()
+end
+
+local function espEquipe(player)
+    return player.Team and player.Team.Name or "Sem equipe"
+end
+
+local function norm(s)
+    return string.lower(tostring(s or ""))
+end
+
+local function espPatente(player)
+    local p = player:GetAttribute("Patente")
+    if p ~= nil then return tostring(p) end
+    local infos = player:FindFirstChild("PlayerInfos")
+    if infos then
+        p = infos:GetAttribute("Patente")
+        if p ~= nil then return tostring(p) end
+        p = infos:GetAttribute("EB_Rank")
+        if p ~= nil then return tostring(p) end
+    end
+    return "?"
+end
+
+local function espEBRank(player)
+    local infos = player:FindFirstChild("PlayerInfos")
+    if infos then
+        local r = infos:GetAttribute("EB_Rank")
+        if r ~= nil then return tostring(r) end
+    end
+    local r = player:GetAttribute("EB_Rank")
+    return r ~= nil and tostring(r) or "?"
+end
+
+local function espTool(player)
+    local c = player.Character
+    if not c then return "Nenhuma" end
+    for _, o in ipairs(c:GetChildren()) do
+        if o:IsA("Tool") then return o.Name end
+    end
+    return "Nenhuma"
+end
+
+local function espTemAlgemas(player)
+    local c = player.Character
+    if not c then return false end
+    for _, o in ipairs(c:GetChildren()) do
+        if o:IsA("Tool") and string.find(norm(o.Name), "algema", 1, true) then return true end
+    end
+    return false
+end
+
+local function espCor(player)
+    if ehOwner(player) then return ESP_CONFIG.CorOwner end
+    if ehAdministradorGeral(player) then return ESP_CONFIG.CorAdmin end
+    local e = norm(espEquipe(player))
+    if string.find(e, "exército", 1, true) or string.find(e, "exercito", 1, true) or e == "eb" or string.find(e, "brasileiro", 1, true) then
+        return ESP_CONFIG.CorEB
+    elseif string.find(e, "civil", 1, true) then
+        return ESP_CONFIG.CorCivil
+    elseif string.find(e, "cyber", 1, true) then
+        return ESP_CONFIG.CorCyber
+    elseif string.find(e, "pris", 1, true) or string.find(e, "preso", 1, true) or string.find(e, "prision", 1, true) then
+        return ESP_CONFIG.CorPrisao
+    end
+    return ESP_CONFIG.CorOutro
+end
+
+local function espDistancia(player)
+    local a = localPlayer.Character and localPlayer.Character:FindFirstChild("HumanoidRootPart")
+    local b = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+    if not a or not b then return nil end
+    return (a.Position - b.Position).Magnitude
+end
+
+-- INFO flutuante do ESP
+local ESPInfoFrame = Instance.new("Frame", ScreenGui)
+ESPInfoFrame.Name = "ESPPlayerInfo"
+ESPInfoFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+ESPInfoFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
+ESPInfoFrame.Size = UDim2.new(0, 300, 0, 315)
+ESPInfoFrame.BackgroundColor3 = Color3.fromRGB(13, 13, 18)
+ESPInfoFrame.BorderSizePixel = 0
+ESPInfoFrame.Visible = false
+ESPInfoFrame.Active = true
+ESPInfoFrame.Draggable = true
+Instance.new("UICorner", ESPInfoFrame).CornerRadius = UDim.new(0, 10)
+local ESPInfoStroke = Instance.new("UIStroke", ESPInfoFrame)
+ESPInfoStroke.Thickness = 1.5
+local ESPInfoScale = Instance.new("UIScale", ESPInfoFrame)
+ESPInfoScale.Scale = espEscala()
+
+local ESPInfoTitulo = Instance.new("TextLabel", ESPInfoFrame)
+ESPInfoTitulo.Position = UDim2.new(0, 10, 0, 0)
+ESPInfoTitulo.Size = UDim2.new(1, -50, 0, 32)
+ESPInfoTitulo.BackgroundTransparency = 1
+ESPInfoTitulo.Font = Enum.Font.Code
+ESPInfoTitulo.Text = "PLAYER INFO"
+ESPInfoTitulo.TextSize = 13
+ESPInfoTitulo.TextXAlignment = Enum.TextXAlignment.Left
+
+local ESPInfoClose = Instance.new("TextButton", ESPInfoFrame)
+ESPInfoClose.Position = UDim2.new(1, -38, 0, 0)
+ESPInfoClose.Size = UDim2.new(0, 38, 0, 32)
+ESPInfoClose.BackgroundTransparency = 1
+ESPInfoClose.Text = "X"
+ESPInfoClose.TextColor3 = Color3.fromRGB(255, 80, 80)
+ESPInfoClose.Font = Enum.Font.GothamBold
+ESPInfoClose.TextSize = 14
+
+local ESPInfoScroll = Instance.new("ScrollingFrame", ESPInfoFrame)
+ESPInfoScroll.Position = UDim2.new(0, 8, 0, 38)
+ESPInfoScroll.Size = UDim2.new(1, -16, 1, -46)
+ESPInfoScroll.BackgroundColor3 = Color3.fromRGB(9, 9, 13)
+ESPInfoScroll.BorderSizePixel = 0
+ESPInfoScroll.ScrollBarThickness = 3
+ESPInfoScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
+ESPInfoScroll.CanvasSize = UDim2.new()
+
+local ESPInfoTexto = Instance.new("TextLabel", ESPInfoScroll)
+ESPInfoTexto.Position = UDim2.new(0, 8, 0, 8)
+ESPInfoTexto.Size = UDim2.new(1, -16, 0, 0)
+ESPInfoTexto.AutomaticSize = Enum.AutomaticSize.Y
+ESPInfoTexto.BackgroundTransparency = 1
+ESPInfoTexto.Font = Enum.Font.Code
+ESPInfoTexto.TextSize = 12
+ESPInfoTexto.TextColor3 = Color3.fromRGB(225, 225, 225)
+ESPInfoTexto.TextWrapped = true
+ESPInfoTexto.TextXAlignment = Enum.TextXAlignment.Left
+ESPInfoTexto.TextYAlignment = Enum.TextYAlignment.Top
+
+local ESPPlayerSelecionado = nil
+ESPInfoClose.Activated:Connect(function()
+    ESPPlayerSelecionado = nil
+    ESPInfoFrame.Visible = false
+end)
+
+local function espAdicionarAtributos(linhas, titulo, inst)
+    table.insert(linhas, "")
+    table.insert(linhas, "== " .. titulo .. " ==")
+    if not inst then table.insert(linhas, "Indisponível"); return end
+    local attrs = inst:GetAttributes()
+    local nomes = {}
+    for n in pairs(attrs) do table.insert(nomes, n) end
+    table.sort(nomes)
+    if #nomes == 0 then table.insert(linhas, "Nenhum atributo"); return end
+    for _, n in ipairs(nomes) do
+        local v = tostring(attrs[n])
+        if #v > 70 then v = string.sub(v, 1, 67) .. "..." end
+        table.insert(linhas, n .. ": " .. v)
+    end
+end
+
+local function atualizarESPInfo()
+    local p = ESPPlayerSelecionado
+    if not p or p.Parent ~= Players then
+        ESPPlayerSelecionado = nil
+        ESPInfoFrame.Visible = false
+        return
+    end
+    local d = espDistancia(p)
+    local linhas = {}
+    if ehOwner(p) then
+        table.insert(linhas, "🔨 DONO DO SCRIPT • CRIADOR 🔨")
+        table.insert(linhas, "")
+    elseif ehAdministradorGeral(p) then
+        table.insert(linhas, "★ ADMINISTRADOR GERAL ★")
+        table.insert(linhas, "")
+    end
+    table.insert(linhas, "Nome: " .. p.Name)
+    table.insert(linhas, "DisplayName: " .. p.DisplayName)
+    table.insert(linhas, "UserId: " .. p.UserId)
+    table.insert(linhas, "Equipe: " .. espEquipe(p))
+    table.insert(linhas, "Patente: " .. espPatente(p))
+    table.insert(linhas, "EB_Rank: " .. espEBRank(p))
+    table.insert(linhas, "Distância: " .. (d and string.format("%.1f studs", d) or "?"))
+    table.insert(linhas, "Tool equipada: " .. espTool(p))
+    table.insert(linhas, "Rastreado: " .. (ESP_Rastreados[p.UserId] and "SIM" or "NÃO"))
+    if d and d <= ESP_CONFIG.DistanciaPerigo and espTemAlgemas(p) then
+        table.insert(linhas, "")
+        table.insert(linhas, "⚠ PERIGO: ALGEMAS PRÓXIMAS ⚠")
+    end
+    espAdicionarAtributos(linhas, "ATRIBUTOS PLAYER", p)
+    espAdicionarAtributos(linhas, "ATRIBUTOS CHARACTER", p.Character)
+    ESPInfoTexto.Text = table.concat(linhas, "\n")
+    ESPInfoTitulo.Text = "INFO • " .. p.Name
+    local c = espCor(p)
+    ESPInfoTitulo.TextColor3 = c
+    ESPInfoStroke.Color = c
+end
+
+local function abrirESPInfo(p)
+    if not ESP_CONFIG.AbrirInfo or not p then return end
+    ESPPlayerSelecionado = p
+    ESPInfoFrame.Visible = true
+    atualizarESPInfo()
+end
+
+local function aplicarEscalaESP(esp)
+    local s = espEscala()
+    esp.Billboard.Size = UDim2.new(0, math.floor(ESP_CONFIG.Largura * s), 0, math.floor(ESP_CONFIG.Altura * s))
+    esp.Fundo.Size = UDim2.new(1, 0, 0, math.floor(ESP_CONFIG.FundoAltura * s))
+    if esp.Owner or esp.Admin then
+        esp.Texto.TextSize = math.max(9, math.floor(11 * s))
+    else
+        esp.Texto.TextSize = math.max(10, math.floor(ESP_CONFIG.Texto * s))
+    end
+end
+
+local function criarESPPlayer(player)
+    if not player or ESPs[player] then return end
+    if player == localPlayer and not ESP_CONFIG.MostrarMeuESP then return end
+
+    local bill = Instance.new("BillboardGui", ScreenGui)
+    bill.Name = "NoctivagaESP_" .. player.UserId
+    bill.Size = UDim2.new(0, 280, 0, 40)
+    bill.AlwaysOnTop = true
+    bill.LightInfluence = 0
+    bill.StudsOffset = Vector3.new(0, ESP_CONFIG.OffsetY, 0)
+
+    local fundo = Instance.new("Frame", bill)
+    fundo.AnchorPoint = Vector2.new(0.5, 0.5)
+    fundo.Position = UDim2.new(0.5, 0, 0.5, 0)
+    fundo.Size = UDim2.new(1, 0, 0, 25)
+    fundo.BackgroundColor3 = ESP_CONFIG.Fundo
+    fundo.BackgroundTransparency = 0.25
+    fundo.BorderSizePixel = 0
+    Instance.new("UICorner", fundo).CornerRadius = UDim.new(0, 5)
+
+    local stroke = Instance.new("UIStroke", fundo)
+    stroke.Thickness = 1
+    stroke.Transparency = 0.15
+
+    local track = Instance.new("UIStroke", fundo)
+    track.Color = ESP_CONFIG.CorTrack1
+    track.Thickness = 4
+    track.Transparency = 1
+
+    local texto = Instance.new("TextLabel", fundo)
+    texto.Size = UDim2.new(1, -8, 1, 0)
+    texto.Position = UDim2.new(0, 4, 0, 0)
+    texto.BackgroundTransparency = 1
+    texto.Font = Enum.Font.Code
+    texto.TextSize = ESP_CONFIG.Texto
+    texto.TextWrapped = true
+    texto.TextStrokeColor3 = Color3.new(0, 0, 0)
+    texto.TextXAlignment = Enum.TextXAlignment.Center
+    texto.TextYAlignment = Enum.TextYAlignment.Center
+
+    local esp = {
+        Billboard = bill,
+        Fundo = fundo,
+        Stroke = stroke,
+        TrackStroke = track,
+        Texto = texto,
+        Owner = ehOwner(player),
+        Admin = ehAdministradorGeral(player),
+        Highlight = nil,
+    }
+    ESPs[player] = esp
+    aplicarEscalaESP(esp)
+end
+
+local function removerESPPlayer(player)
+    local esp = ESPs[player]
+    if not esp then return end
+    if esp.Highlight then pcall(function() esp.Highlight:Destroy() end) end
+    if esp.Billboard then pcall(function() esp.Billboard:Destroy() end) end
+    ESPs[player] = nil
+end
+
+local function atualizarESPRastreio(player, esp)
+    local ativo = ESP_Rastreados[player.UserId] == true
+    local char = player.Character
+    if not ativo then
+        if esp.Highlight then esp.Highlight:Destroy(); esp.Highlight = nil end
+        esp.TrackStroke.Transparency = 1
+        return
+    end
+    if not char then return end
+    if not esp.Highlight or esp.Highlight.Parent ~= char then
+        if esp.Highlight then esp.Highlight:Destroy() end
+        local h = Instance.new("Highlight")
+        h.Name = "NoctivagaRastreio"
+        h.Parent = char
+        h.Adornee = char
+        h.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+        h.FillTransparency = 0.78
+        h.OutlineTransparency = 0
+        esp.Highlight = h
+    end
+    local fase = math.floor(os.clock() / ESP_CONFIG.VelocidadeRastreio) % 2
+    local cor = fase == 0 and ESP_CONFIG.CorTrack1 or ESP_CONFIG.CorTrack2
+    esp.Highlight.FillColor = cor
+    esp.Highlight.OutlineColor = cor
+    esp.Highlight.FillTransparency = fase == 0 and 0.72 or 0.88
+    esp.TrackStroke.Color = cor
+    esp.TrackStroke.Transparency = 0
+end
+
+local function atualizarESPPlayer(player, esp)
+    local char = player.Character
+    local head = char and char:FindFirstChild("Head")
+    local root = char and char:FindFirstChild("HumanoidRootPart")
+    local meuRoot = localPlayer.Character and localPlayer.Character:FindFirstChild("HumanoidRootPart")
+    if not ESP_CONFIG.Ativado or not char or not head or not root or not meuRoot then
+        esp.Billboard.Enabled = false
+        if not ESP_CONFIG.Ativado then
+            if esp.Highlight then esp.Highlight:Destroy(); esp.Highlight = nil end
+            esp.TrackStroke.Transparency = 1
+        end
+        return
+    end
+
+    local distancia = player == localPlayer and 0 or (meuRoot.Position - root.Position).Magnitude
+    esp.Billboard.Enabled = distancia <= ESP_CONFIG.DistanciaMaxima
+    esp.Billboard.Adornee = head
+    atualizarESPRastreio(player, esp)
+    if distancia > ESP_CONFIG.DistanciaMaxima then return end
+
+    if ehOwner(player) then
+        esp.Texto.Text = "🔨 DONO DO SCRIPT • CRIADOR 🔨\n" .. player.Name .. " | Patente " .. espPatente(player) .. " | " .. string.format("%.0f studs", distancia)
+        esp.Texto.TextColor3 = ESP_CONFIG.TextoOwner
+        esp.Texto.TextStrokeTransparency = 0
+        esp.Fundo.BackgroundColor3 = ESP_CONFIG.FundoOwner
+        esp.Fundo.BackgroundTransparency = 0.10
+        esp.Stroke.Color = ESP_CONFIG.CorOwner
+        esp.Stroke.Thickness = 3
+        esp.Stroke.Transparency = 0
+        esp.Texto.TextTransparency = 0
+        return
+    end
+
+    if ehAdministradorGeral(player) then
+        esp.Texto.Text = "★ Administrador Geral ★\n" .. player.Name .. " | Patente " .. espPatente(player) .. " | " .. string.format("%.0f studs", distancia)
+        esp.Texto.TextColor3 = ESP_CONFIG.TextoAdmin
+        esp.Texto.TextStrokeTransparency = 0.05
+        esp.Fundo.BackgroundColor3 = ESP_CONFIG.FundoAdmin
+        esp.Fundo.BackgroundTransparency = 0.10
+        esp.Stroke.Color = ESP_CONFIG.CorAdmin
+        esp.Stroke.Thickness = 2.5
+        esp.Stroke.Transparency = 0
+        esp.Texto.TextTransparency = 0
+        return
+    end
+
+    local perigo = distancia <= ESP_CONFIG.DistanciaPerigo and espTemAlgemas(player)
+    local partes = {}
+    if perigo then table.insert(partes, "⚠") end
+    table.insert(partes, player.Name)
+    table.insert(partes, "Patente " .. espPatente(player))
+    table.insert(partes, string.format("%.0f studs", distancia))
+    esp.Texto.Text = table.concat(partes, " | ")
+
+    if perigo then
+        local fase = math.floor(os.clock() / ESP_CONFIG.VelocidadePerigo) % 2
+        local cor = fase == 0 and Color3.fromRGB(255, 210, 0) or Color3.fromRGB(255, 120, 0)
+        esp.Texto.TextColor3 = cor
+        esp.Texto.TextStrokeTransparency = 0.05
+        esp.Stroke.Color = cor
+        esp.Stroke.Thickness = 2.5
+        esp.Stroke.Transparency = 0
+        esp.Fundo.BackgroundColor3 = Color3.fromRGB(45, 28, 0)
+        esp.Fundo.BackgroundTransparency = 0.15
+        esp.Texto.TextTransparency = 0
+        return
+    end
+
+    local cor = espCor(player)
+    esp.Texto.TextColor3 = cor
+    esp.Texto.TextStrokeTransparency = 0.35
+    esp.Stroke.Color = cor
+    esp.Stroke.Thickness = 1
+    esp.Stroke.Transparency = 0.15
+    esp.Fundo.BackgroundColor3 = ESP_CONFIG.Fundo
+    local fade = math.clamp(distancia / 700, 0, 0.65)
+    esp.Texto.TextTransparency = fade * 0.25
+    esp.Fundo.BackgroundTransparency = math.clamp(0.25 + fade, 0, 0.9)
+end
+
+local function atualizarBotoesESP()
+    if ESP_CONFIG.Ativado then
+        ButtonESPAtivo.Text = "[ ESP: ON ]"
+        ButtonESPAtivo.BackgroundColor3 = Color3.fromRGB(15, 45, 25)
+        ButtonESPAtivo.TextColor3 = Color3.fromRGB(50, 255, 130)
+    else
+        ButtonESPAtivo.Text = "[ ESP: OFF ]"
+        ButtonESPAtivo.BackgroundColor3 = Color3.fromRGB(45, 20, 20)
+        ButtonESPAtivo.TextColor3 = Color3.fromRGB(255, 100, 100)
+        ESPInfoFrame.Visible = false
+        ESPPlayerSelecionado = nil
+    end
+    if ESP_CONFIG.AbrirInfo then
+        ButtonESPInfo.Text = "[ INFO: ON ]"
+        ButtonESPInfo.BackgroundColor3 = Color3.fromRGB(15, 45, 35)
+        ButtonESPInfo.TextColor3 = Color3.fromRGB(0, 255, 200)
+    else
+        ButtonESPInfo.Text = "[ INFO: OFF ]"
+        ButtonESPInfo.BackgroundColor3 = Color3.fromRGB(45, 20, 20)
+        ButtonESPInfo.TextColor3 = Color3.fromRGB(255, 100, 100)
+        ESPInfoFrame.Visible = false
+        ESPPlayerSelecionado = nil
+    end
+end
+
+local function atualizarListaESPAlvos()
+    for _, o in ipairs(ListaESPAlvos:GetChildren()) do
+        if o:IsA("TextButton") then o:Destroy() end
+    end
+    local lista = Players:GetPlayers()
+    table.sort(lista, function(a, b) return string.lower(a.Name) < string.lower(b.Name) end)
+    for _, p in ipairs(lista) do
+        if p ~= localPlayer then
+            local b = Instance.new("TextButton", ListaESPAlvos)
+            b.Size = UDim2.new(1, -8, 0, 28)
+            b.Font = Enum.Font.Code
+            b.TextSize = 9
+            Instance.new("UICorner", b).CornerRadius = UDim.new(0, 5)
+            local function refresh()
+                if ESP_Rastreados[p.UserId] then
+                    b.Text = "[ ON ] " .. p.Name
+                    b.BackgroundColor3 = Color3.fromRGB(15, 50, 25)
+                    b.TextColor3 = ESP_CONFIG.CorTrack1
+                else
+                    b.Text = "[ OFF ] " .. p.Name
+                    b.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+                    b.TextColor3 = Color3.fromRGB(210, 210, 210)
+                end
+            end
+            b.Activated:Connect(function()
+                ESP_Rastreados[p.UserId] = not ESP_Rastreados[p.UserId] or nil
+                refresh()
+            end)
+            refresh()
+        end
+    end
+end
+
+ButtonExtrasESP.Activated:Connect(function()
+    Page_Extras.Visible = false
+    Page_ESPAlvos.Visible = false
+    Page_ESP.Visible = true
+    atualizarBotoesESP()
+end)
+
+ButtonVoltarESP.Activated:Connect(function()
+    Page_ESP.Visible = false
+    Page_Extras.Visible = true
+end)
+
+ButtonESPAtivo.Activated:Connect(function()
+    ESP_CONFIG.Ativado = not ESP_CONFIG.Ativado
+    atualizarBotoesESP()
+end)
+
+ButtonESPInfo.Activated:Connect(function()
+    ESP_CONFIG.AbrirInfo = not ESP_CONFIG.AbrirInfo
+    atualizarBotoesESP()
+end)
+
+ButtonESPAlvos.Activated:Connect(function()
+    atualizarListaESPAlvos()
+    Page_ESP.Visible = false
+    Page_ESPAlvos.Visible = true
+end)
+
+ButtonVoltarESPAlvos.Activated:Connect(function()
+    Page_ESPAlvos.Visible = false
+    Page_ESP.Visible = true
+end)
+
+local function espJogadorNaTela(pos)
+    local cam = Workspace.CurrentCamera
+    if not cam then return nil end
+    local s = espEscala()
+    local largura = ESP_CONFIG.Largura * s
+    local altura = math.max(30, ESP_CONFIG.Altura * s)
+    local melhor, score = nil, math.huge
+    for _, p in ipairs(Players:GetPlayers()) do
+        local esp = ESPs[p]
+        local head = p.Character and p.Character:FindFirstChild("Head")
+        if esp and head and esp.Billboard.Enabled then
+            local ponto, visivel = cam:WorldToScreenPoint(head.Position + Vector3.new(0, ESP_CONFIG.OffsetY, 0))
+            if visivel and ponto.Z > 0 then
+                local dx, dy = pos.X - ponto.X, pos.Y - ponto.Y
+                if math.abs(dx) <= largura / 2 and math.abs(dy) <= altura / 2 + 12 then
+                    local d = math.sqrt(dx * dx + dy * dy)
+                    if d < score then score, melhor = d, p end
+                end
+            end
+        end
+    end
+    return melhor
+end
+
+guardarConexao(UserInputService.InputBegan:Connect(function(input, processado)
+    if processado or not ESP_CONFIG.Ativado or not ESP_CONFIG.AbrirInfo then return end
+    local t = input.UserInputType
+    if t ~= Enum.UserInputType.MouseButton1 and t ~= Enum.UserInputType.Touch then return end
+    local p = espJogadorNaTela(input.Position)
+    if p then abrirESPInfo(p) end
+end))
+
+for _, p in ipairs(Players:GetPlayers()) do criarESPPlayer(p) end
+
+guardarConexao(Players.PlayerAdded:Connect(function(p)
+    criarESPPlayer(p)
+    if Page_ESPAlvos.Visible then task.defer(atualizarListaESPAlvos) end
+end))
+
+guardarConexao(Players.PlayerRemoving:Connect(function(p)
+    ESP_Rastreados[p.UserId] = nil
+    if ESPPlayerSelecionado == p then ESPPlayerSelecionado = nil; ESPInfoFrame.Visible = false end
+    removerESPPlayer(p)
+    if Page_ESPAlvos.Visible then task.defer(atualizarListaESPAlvos) end
+end))
+
+local ultimoInfoESP = 0
+guardarConexao(RunService.RenderStepped:Connect(function()
+    for _, p in ipairs(Players:GetPlayers()) do
+        if not ESPs[p] then criarESPPlayer(p) end
+        local esp = ESPs[p]
+        if esp then atualizarESPPlayer(p, esp) end
+    end
+    if ESPInfoFrame.Visible and ESPPlayerSelecionado and os.clock() - ultimoInfoESP >= 0.2 then
+        ultimoInfoESP = os.clock()
+        atualizarESPInfo()
+    end
+end))
+
+atualizarBotoesESP()
+
+-- =======================================================
+-- NOTIFICADOR AUTOMÁTICO DE DONO / ADMIN
+-- =======================================================
+
+local NotifContainer = Instance.new("Frame", ScreenGui)
+NotifContainer.Name = "SpecialJoinNotifier"
+NotifContainer.AnchorPoint = Vector2.new(1, 0)
+NotifContainer.Position = UDim2.new(1, -12, 0, 12)
+NotifContainer.Size = UDim2.new(0, 340, 0, 450)
+NotifContainer.BackgroundTransparency = 1
+NotifContainer.ZIndex = 100
+local NotifScale = Instance.new("UIScale", NotifContainer)
+NotifScale.Scale = escalaNovaUI()
+local NotifLayout = Instance.new("UIListLayout", NotifContainer)
+NotifLayout.Padding = UDim.new(0, 8)
+NotifLayout.HorizontalAlignment = Enum.HorizontalAlignment.Right
+NotifLayout.SortOrder = Enum.SortOrder.LayoutOrder
+local notifContador = 0
+
+local function criarNotificacaoEspecial(player, cargo, cor, fundo, icone, mensagem)
+    notifContador += 1
+    local card = Instance.new("Frame", NotifContainer)
+    card.LayoutOrder = notifContador
+    card.Size = UDim2.new(0, 325, 0, 76)
+    card.Position = UDim2.new(0, 350, 0, 0)
+    card.BackgroundColor3 = fundo
+    card.BackgroundTransparency = 0.06
+    card.BorderSizePixel = 0
+    card.ClipsDescendants = true
+    card.ZIndex = 101
+    Instance.new("UICorner", card).CornerRadius = UDim.new(0, 10)
+    local stroke = Instance.new("UIStroke", card)
+    stroke.Color = cor
+    stroke.Thickness = 2
+    local barra = Instance.new("Frame", card)
+    barra.Size = UDim2.new(0, 4, 1, 0)
+    barra.BackgroundColor3 = cor
+    barra.BorderSizePixel = 0
+    barra.ZIndex = 102
+    local icon = Instance.new("TextLabel", card)
+    icon.Position = UDim2.new(0, 12, 0, 7)
+    icon.Size = UDim2.new(0, 40, 0, 40)
+    icon.BackgroundTransparency = 1
+    icon.Text = icone
+    icon.TextSize = 27
+    icon.Font = Enum.Font.GothamBold
+    icon.ZIndex = 102
+    local titulo = Instance.new("TextLabel", card)
+    titulo.Position = UDim2.new(0, 54, 0, 8)
+    titulo.Size = UDim2.new(1, -64, 0, 20)
+    titulo.BackgroundTransparency = 1
+    titulo.Text = cargo
+    titulo.TextColor3 = cor
+    titulo.Font = Enum.Font.GothamBold
+    titulo.TextSize = 13
+    titulo.TextXAlignment = Enum.TextXAlignment.Left
+    titulo.ZIndex = 102
+    local nome = Instance.new("TextLabel", card)
+    nome.Position = UDim2.new(0, 54, 0, 29)
+    nome.Size = UDim2.new(1, -64, 0, 18)
+    nome.BackgroundTransparency = 1
+    nome.Text = player.DisplayName .. " (@" .. player.Name .. ")"
+    nome.TextColor3 = Color3.fromRGB(240, 240, 245)
+    nome.Font = Enum.Font.Code
+    nome.TextSize = 11
+    nome.TextXAlignment = Enum.TextXAlignment.Left
+    nome.ZIndex = 102
+    local msg = Instance.new("TextLabel", card)
+    msg.Position = UDim2.new(0, 14, 0, 51)
+    msg.Size = UDim2.new(1, -28, 0, 18)
+    msg.BackgroundTransparency = 1
+    msg.Text = mensagem
+    msg.TextColor3 = Color3.fromRGB(200, 200, 210)
+    msg.Font = Enum.Font.Code
+    msg.TextSize = 10
+    msg.TextXAlignment = Enum.TextXAlignment.Left
+    msg.ZIndex = 102
+
+    TweenService:Create(card, TweenInfo.new(0.38, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Position = UDim2.new(0, 0, 0, 0)}):Play()
+    task.spawn(function()
+        for _ = 1, 3 do
+            TweenService:Create(stroke, TweenInfo.new(0.28), {Transparency = 0.55}):Play()
+            task.wait(0.28)
+            TweenService:Create(stroke, TweenInfo.new(0.28), {Transparency = 0}):Play()
+            task.wait(0.28)
+        end
+    end)
+    task.delay(6, function()
+        if not card.Parent then return end
+        TweenService:Create(card, TweenInfo.new(0.35, Enum.EasingStyle.Quart, Enum.EasingDirection.In), {Position = UDim2.new(0, 360, 0, 0), BackgroundTransparency = 1}):Play()
+        TweenService:Create(stroke, TweenInfo.new(0.25), {Transparency = 1}):Play()
+        TweenService:Create(titulo, TweenInfo.new(0.25), {TextTransparency = 1}):Play()
+        TweenService:Create(nome, TweenInfo.new(0.25), {TextTransparency = 1}):Play()
+        TweenService:Create(msg, TweenInfo.new(0.25), {TextTransparency = 1}):Play()
+        TweenService:Create(icon, TweenInfo.new(0.25), {TextTransparency = 1}):Play()
+        task.wait(0.4)
+        if card then card:Destroy() end
+    end)
+end
+
+local function verificarCargoEspecial(player, existente)
+    if ehOwner(player) then
+        criarNotificacaoEspecial(
+            player,
+            "🔨 DONO DO SCRIPT • CRIADOR",
+            Color3.fromRGB(255, 45, 45),
+            Color3.fromRGB(50, 8, 10),
+            "🔨",
+            existente and "O Dono do Script está no servidor." or "O Dono do Script entrou no servidor!"
+        )
+    elseif ehAdministradorGeral(player) then
+        criarNotificacaoEspecial(
+            player,
+            "★ ADMINISTRADOR GERAL ★",
+            Color3.fromRGB(145, 95, 255),
+            Color3.fromRGB(28, 15, 50),
+            "★",
+            existente and "Um Administrador Geral está no servidor." or "Um Administrador Geral entrou no servidor!"
+        )
+    end
+end
+
+guardarConexao(Players.PlayerAdded:Connect(function(player)
+    verificarCargoEspecial(player, false)
+end))
+
+-- Também avisa se o cargo já estiver presente quando o HUB for executado.
+task.delay(1, function()
+    if not ScreenGui.Parent then return end
+    for _, p in ipairs(Players:GetPlayers()) do
+        if p ~= localPlayer then
+            verificarCargoEspecial(p, true)
+            task.wait(0.25)
+        end
+    end
+end)
+
+-- =======================================================
+-- ATUALIZAÇÃO DE ESCALA DAS NOVAS INTERFACES
+-- =======================================================
+
+local function atualizarEscalasNovas()
+    local s = escalaNovaUI()
+    MiniTPScale.Scale = s
+    TPPessoaScale.Scale = s
+    ESPInfoScale.Scale = s
+    NotifScale.Scale = s
+    for _, esp in pairs(ESPs) do aplicarEscalaESP(esp) end
+end
+
+local camNovas = Workspace.CurrentCamera
+if camNovas then
+    guardarConexao(camNovas:GetPropertyChangedSignal("ViewportSize"):Connect(atualizarEscalasNovas))
+end
+atualizarEscalasNovas()
+
+-- =======================================================
+-- LIMPEZA DAS IMPLEMENTAÇÕES NOVAS
+-- =======================================================
+
+ScreenGui.Destroying:Connect(function()
+    miniTPAtivo = false
+    infiniteJumpAtivo = false
+    ESP_CONFIG.Ativado = false
+    for _, c in ipairs(NovasConexoes) do
+        pcall(function() c:Disconnect() end)
+    end
+    for p in pairs(ESPs) do
+        removerESPPlayer(p)
+    end
+end)
+
+
+-- =======================================================
+
+-- LIMPEZA DAS NOVAS CONEXÕES AO FECHAR O HUB
+
+-- =======================================================
+
+ScreenGui.Destroying:Connect(function()
+
+    desligarAntiAlgemaOriginal()
+
+    desligarAntiAlgemaEquipada()
+
+    desligarAntiAlgemaForte()
+
+    protecaoPlayersAtivada = false
+
+    if conexaoProtecaoPlayers then
+
+        conexaoProtecaoPlayers:Disconnect()
+
+        conexaoProtecaoPlayers = nil
+
+    end
+
+    getgenv().PlayerProtectionConnection = nil
+
+end)
+
+print("Noctivaga Hub V2 rodando!")
